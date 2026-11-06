@@ -1,0 +1,48 @@
+{
+  "id": "ringtoss-06",
+  "name": "Clean Sweep",
+  "hint": "No wrong colors allowed! One mistake and it is over.",
+  "gameType": "ringToss",
+  "time": null,
+  "colors": 3,
+  "startPieces": 8,
+  "supply": 18,
+  "specialChance": 0,
+  "targets": [
+    {
+      "kind": "peg",
+      "x": 92,
+      "y": 900,
+      "height": 150
+    },
+    {
+      "kind": "peg",
+      "x": 300,
+      "y": 900,
+      "height": 220,
+      "multiplier": 2
+    },
+    {
+      "kind": "peg",
+      "x": 508,
+      "y": 900,
+      "height": 150
+    }
+  ],
+  "goal": {
+    "type": "noWrong",
+    "value": 300
+  },
+  "stars": [
+    300,
+    550,
+    800
+  ],
+  "obstacles": [],
+  "specialWeights": {
+    "rainbow": 0.35,
+    "golden": 0.25,
+    "heavy": 0.25,
+    "bomb": 0.15
+  }
+}

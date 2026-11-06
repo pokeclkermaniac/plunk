@@ -1,0 +1,85 @@
+{
+  "id": "pool-party",
+  "name": "Pool Party",
+  "desc": "Tiles and sunlight caustics.",
+  "frame": {
+    "shell": "#ffffff",
+    "shellDark": "#cfd8dc",
+    "highlight": "#ffffff",
+    "trim": "#ff6f91",
+    "bezel": "#90a4ae",
+    "outline": "#00000000",
+    "outlineWidth": 0,
+    "radius": 60,
+    "scuffs": false,
+    "gloss": 0.4
+  },
+  "buttons": {
+    "left": "#ff6f91",
+    "right": "#ffc75f",
+    "cap": "#ffffff",
+    "base": "#90a4ae"
+  },
+  "water": {
+    "top": "#7ff0ff",
+    "bottom": "#00a3d9",
+    "alpha": 0.5,
+    "surface": "#ffffff",
+    "front": 0.08
+  },
+  "rings": {
+    "colors": [
+      "#ff4f6d",
+      "#2979ff",
+      "#ffd600",
+      "#00c853",
+      "#aa00ff",
+      "#ff6d00"
+    ],
+    "style": "glossy",
+    "outline": "#00000030",
+    "outlineWidth": 1.5
+  },
+  "balls": {
+    "colors": [
+      "#ff4f6d",
+      "#2979ff",
+      "#ffd600",
+      "#00c853",
+      "#aa00ff",
+      "#ff6d00"
+    ],
+    "style": "beach",
+    "outline": "#00000030",
+    "outlineWidth": 1.5
+  },
+  "peg": {
+    "color": "#ffffff",
+    "shade": "#b0bec5"
+  },
+  "hoop": {
+    "rim": "#ff6f91",
+    "board": "#ffffff",
+    "boardEdge": "#b0bec5",
+    "net": "#ffffff",
+    "tube": "#ffffff"
+  },
+  "obstacle": {
+    "color": "#ffffff",
+    "shade": "#90a4ae"
+  },
+  "background": {
+    "style": "tiles",
+    "top": "#4fc3f7",
+    "bottom": "#0288d1",
+    "accent": "#ffffff"
+  },
+  "ui": {
+    "text": "#ffffff",
+    "panel": "#0288d1",
+    "accent": "#ffc75f",
+    "font": "'Trebuchet MS', Verdana, sans-serif"
+  },
+  "pixel": false,
+  "sound": "toy"
+}

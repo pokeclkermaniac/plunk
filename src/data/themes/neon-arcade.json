@@ -1,0 +1,85 @@
+{
+  "id": "neon-arcade",
+  "name": "Neon Arcade",
+  "desc": "Dark tank, glowing rings.",
+  "frame": {
+    "shell": "#1a1033",
+    "shellDark": "#0b0618",
+    "highlight": "#3d2a6b",
+    "trim": "#ff2bd6",
+    "bezel": "#000000",
+    "outline": "#00f0ff",
+    "outlineWidth": 3,
+    "radius": 36,
+    "scuffs": false,
+    "gloss": 0.15
+  },
+  "buttons": {
+    "left": "#ff2bd6",
+    "right": "#00f0ff",
+    "cap": "#ffffff",
+    "base": "#000000"
+  },
+  "water": {
+    "top": "#2b1a5e",
+    "bottom": "#07031a",
+    "alpha": 0.6,
+    "surface": "#00f0ff",
+    "front": 0.06
+  },
+  "rings": {
+    "colors": [
+      "#ff3860",
+      "#3d8bff",
+      "#ffe600",
+      "#39ff88",
+      "#c34dff",
+      "#ff8a00"
+    ],
+    "style": "neon",
+    "outline": "#ffffff",
+    "outlineWidth": 1.5
+  },
+  "balls": {
+    "colors": [
+      "#ff3860",
+      "#3d8bff",
+      "#ffe600",
+      "#39ff88",
+      "#c34dff",
+      "#ff8a00"
+    ],
+    "style": "neon",
+    "outline": "#ffffff",
+    "outlineWidth": 1.5
+  },
+  "peg": {
+    "color": "#00f0ff",
+    "shade": "#005a66"
+  },
+  "hoop": {
+    "rim": "#ff2bd6",
+    "board": "#1a1033",
+    "boardEdge": "#00f0ff",
+    "net": "#00f0ff",
+    "tube": "#00f0ff"
+  },
+  "obstacle": {
+    "color": "#3d2a6b",
+    "shade": "#ff2bd6"
+  },
+  "background": {
+    "style": "stars",
+    "top": "#120a2a",
+    "bottom": "#030108",
+    "accent": "#00f0ff"
+  },
+  "ui": {
+    "text": "#ffffff",
+    "panel": "#1a1033",
+    "accent": "#ff2bd6",
+    "font": "'Trebuchet MS', Verdana, sans-serif"
+  },
+  "pixel": false,
+  "sound": "chip"
+}

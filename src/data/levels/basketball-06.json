@@ -1,0 +1,52 @@
+{
+  "id": "basketball-06",
+  "name": "All-Star",
+  "hint": "Three hoops. Fill a tube with one color.",
+  "gameType": "basketball",
+  "time": 150,
+  "colors": 3,
+  "startPieces": 6,
+  "supply": null,
+  "specialChance": 0.1,
+  "targets": [
+    {
+      "kind": "hoop",
+      "x": 0,
+      "y": 330,
+      "facing": "right"
+    },
+    {
+      "kind": "hoop",
+      "x": 600,
+      "y": 330,
+      "facing": "left"
+    },
+    {
+      "kind": "hoop",
+      "x": 240,
+      "y": 190,
+      "facing": "right",
+      "move": {
+        "dx": 90,
+        "periodSec": 8
+      },
+      "multiplier": 2
+    }
+  ],
+  "goal": {
+    "type": "fullTube",
+    "value": 1
+  },
+  "stars": [
+    500,
+    900,
+    1400
+  ],
+  "obstacles": [],
+  "specialWeights": {
+    "rainbow": 0.35,
+    "golden": 0.25,
+    "heavy": 0.25,
+    "bomb": 0.15
+  }
+}

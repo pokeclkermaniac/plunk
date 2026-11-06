@@ -1,0 +1,62 @@
+{
+  "id": "ringtoss-07",
+  "name": "Ledge Life",
+  "hint": "Pegs up on ledges are harder to reach.",
+  "gameType": "ringToss",
+  "time": 150,
+  "colors": 3,
+  "startPieces": 8,
+  "supply": null,
+  "specialChance": 0.1,
+  "specialWeights": {
+    "rainbow": 0.6,
+    "golden": 0.4
+  },
+  "targets": [
+    {
+      "kind": "peg",
+      "x": 105,
+      "y": 592,
+      "height": 120
+    },
+    {
+      "kind": "peg",
+      "x": 300,
+      "y": 900,
+      "height": 200
+    },
+    {
+      "kind": "peg",
+      "x": 495,
+      "y": 592,
+      "height": 120
+    }
+  ],
+  "obstacles": [
+    {
+      "type": "ledge",
+      "x": 105,
+      "y": 600,
+      "w": 170,
+      "h": 16,
+      "angle": 0
+    },
+    {
+      "type": "ledge",
+      "x": 495,
+      "y": 600,
+      "w": 170,
+      "h": 16,
+      "angle": 0
+    }
+  ],
+  "goal": {
+    "type": "fullPegs",
+    "value": 1
+  },
+  "stars": [
+    400,
+    800,
+    1200
+  ]
+}

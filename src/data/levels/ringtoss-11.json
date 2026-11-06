@@ -1,0 +1,55 @@
+{
+  "id": "ringtoss-11",
+  "name": "Gold Rush",
+  "hint": "Golden rings pay +100 anywhere. The x3 peg sits high.",
+  "gameType": "ringToss",
+  "time": 150,
+  "colors": 4,
+  "startPieces": 10,
+  "supply": null,
+  "specialChance": 0.2,
+  "specialWeights": {
+    "golden": 0.6,
+    "rainbow": 0.4
+  },
+  "targets": [
+    {
+      "kind": "peg",
+      "x": 92,
+      "y": 900,
+      "height": 150
+    },
+    {
+      "kind": "peg",
+      "x": 300,
+      "y": 470,
+      "height": 120,
+      "multiplier": 3
+    },
+    {
+      "kind": "peg",
+      "x": 508,
+      "y": 900,
+      "height": 150
+    }
+  ],
+  "obstacles": [
+    {
+      "type": "ledge",
+      "x": 300,
+      "y": 478,
+      "w": 150,
+      "h": 16,
+      "angle": 0
+    }
+  ],
+  "goal": {
+    "type": "score",
+    "value": 1200
+  },
+  "stars": [
+    1200,
+    1800,
+    2500
+  ]
+}

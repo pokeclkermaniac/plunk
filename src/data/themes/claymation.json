@@ -1,0 +1,86 @@
+{
+  "id": "claymation",
+  "name": "Claymation",
+  "desc": "Lumpy, hand-made textures.",
+  "frame": {
+    "shell": "#d98c5f",
+    "shellDark": "#a35d38",
+    "highlight": "#f2b38c",
+    "trim": "#8fbf5a",
+    "bezel": "#6b3a22",
+    "outline": "#00000030",
+    "outlineWidth": 3,
+    "radius": 90,
+    "scuffs": true,
+    "gloss": 0.1,
+    "lumpy": true
+  },
+  "buttons": {
+    "left": "#e0c341",
+    "right": "#5aa0c9",
+    "cap": "#f2e6d0",
+    "base": "#6b3a22"
+  },
+  "water": {
+    "top": "#a6d9c7",
+    "bottom": "#4f9a8a",
+    "alpha": 0.55,
+    "surface": "#f2f2e0",
+    "front": 0.12
+  },
+  "rings": {
+    "colors": [
+      "#c9483e",
+      "#3f6fb5",
+      "#e3bf3d",
+      "#5c9e4a",
+      "#8a58a8",
+      "#e0813a"
+    ],
+    "style": "clay",
+    "outline": "#00000030",
+    "outlineWidth": 2
+  },
+  "balls": {
+    "colors": [
+      "#c9483e",
+      "#3f6fb5",
+      "#e3bf3d",
+      "#5c9e4a",
+      "#8a58a8",
+      "#e0813a"
+    ],
+    "style": "clay",
+    "outline": "#00000030",
+    "outlineWidth": 2
+  },
+  "peg": {
+    "color": "#efe3cf",
+    "shade": "#bfa98a"
+  },
+  "hoop": {
+    "rim": "#e0813a",
+    "board": "#efe3cf",
+    "boardEdge": "#bfa98a",
+    "net": "#f2f2e0",
+    "tube": "#f2f2e0"
+  },
+  "obstacle": {
+    "color": "#c9b28f",
+    "shade": "#8f7756"
+  },
+  "background": {
+    "style": "clay",
+    "top": "#7a9c8f",
+    "bottom": "#3d5c52",
+    "accent": "#f2e6d0"
+  },
+  "ui": {
+    "text": "#fff7ea",
+    "panel": "#6b3a22",
+    "accent": "#e0c341",
+    "font": "Georgia, 'Times New Roman', serif"
+  },
+  "pixel": false,
+  "sound": "toy"
+}

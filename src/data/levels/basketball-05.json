@@ -1,0 +1,42 @@
+{
+  "id": "basketball-05",
+  "name": "Big Shots",
+  "hint": "The x2 hoop doubles everything. Special balls are about.",
+  "gameType": "basketball",
+  "time": 90,
+  "colors": 3,
+  "startPieces": 5,
+  "supply": null,
+  "specialChance": 0.2,
+  "specialWeights": {
+    "rainbow": 0.3,
+    "golden": 0.3,
+    "heavy": 0.2,
+    "bomb": 0.2
+  },
+  "targets": [
+    {
+      "kind": "hoop",
+      "x": 0,
+      "y": 300,
+      "facing": "right"
+    },
+    {
+      "kind": "hoop",
+      "x": 600,
+      "y": 300,
+      "facing": "left",
+      "multiplier": 2
+    }
+  ],
+  "goal": {
+    "type": "score",
+    "value": 600
+  },
+  "stars": [
+    600,
+    1000,
+    1500
+  ],
+  "obstacles": []
+}

@@ -1,0 +1,85 @@
+{
+  "id": "pixel-art",
+  "name": "Pixel Art",
+  "desc": "Chunky pixels and chiptune bleeps.",
+  "frame": {
+    "shell": "#3b5dc9",
+    "shellDark": "#29366f",
+    "highlight": "#41a6f6",
+    "trim": "#ffcd75",
+    "bezel": "#1a1c2c",
+    "outline": "#1a1c2c",
+    "outlineWidth": 3,
+    "radius": 12,
+    "scuffs": false,
+    "gloss": 0.2
+  },
+  "buttons": {
+    "left": "#ef7d57",
+    "right": "#a7f070",
+    "cap": "#f4f4f4",
+    "base": "#1a1c2c"
+  },
+  "water": {
+    "top": "#73eff7",
+    "bottom": "#257179",
+    "alpha": 0.6,
+    "surface": "#f4f4f4",
+    "front": 0.1
+  },
+  "rings": {
+    "colors": [
+      "#b13e53",
+      "#3b5dc9",
+      "#ffcd75",
+      "#38b764",
+      "#8b4ba8",
+      "#ef7d57"
+    ],
+    "style": "flat",
+    "outline": "#1a1c2c",
+    "outlineWidth": 2
+  },
+  "balls": {
+    "colors": [
+      "#b13e53",
+      "#3b5dc9",
+      "#ffcd75",
+      "#38b764",
+      "#8b4ba8",
+      "#ef7d57"
+    ],
+    "style": "flat",
+    "outline": "#1a1c2c",
+    "outlineWidth": 2
+  },
+  "peg": {
+    "color": "#f4f4f4",
+    "shade": "#94b0c2"
+  },
+  "hoop": {
+    "rim": "#ef7d57",
+    "board": "#f4f4f4",
+    "boardEdge": "#566c86",
+    "net": "#f4f4f4",
+    "tube": "#f4f4f4"
+  },
+  "obstacle": {
+    "color": "#94b0c2",
+    "shade": "#566c86"
+  },
+  "background": {
+    "style": "grid",
+    "top": "#29366f",
+    "bottom": "#1a1c2c",
+    "accent": "#41a6f6"
+  },
+  "ui": {
+    "text": "#f4f4f4",
+    "panel": "#29366f",
+    "accent": "#ffcd75",
+    "font": "'Courier New', Courier, monospace"
+  },
+  "pixel": true,
+  "sound": "chip"
+}

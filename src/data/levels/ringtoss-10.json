@@ -1,0 +1,57 @@
+{
+  "id": "ringtoss-10",
+  "name": "Four Play",
+  "hint": "Four colors, four pegs. Plan your streaks.",
+  "gameType": "ringToss",
+  "time": 150,
+  "colors": 4,
+  "startPieces": 10,
+  "supply": null,
+  "specialChance": 0.08,
+  "targets": [
+    {
+      "kind": "peg",
+      "x": 62,
+      "y": 900,
+      "height": 150
+    },
+    {
+      "kind": "peg",
+      "x": 250,
+      "y": 900,
+      "height": 230
+    },
+    {
+      "kind": "peg",
+      "x": 350,
+      "y": 900,
+      "height": 230
+    },
+    {
+      "kind": "peg",
+      "x": 538,
+      "y": 900,
+      "height": 150
+    }
+  ],
+  "jets": [
+    156,
+    444
+  ],
+  "goal": {
+    "type": "fullPegs",
+    "value": 1
+  },
+  "stars": [
+    500,
+    900,
+    1300
+  ],
+  "obstacles": [],
+  "specialWeights": {
+    "rainbow": 0.35,
+    "golden": 0.25,
+    "heavy": 0.25,
+    "bomb": 0.15
+  }
+}

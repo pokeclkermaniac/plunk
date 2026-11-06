@@ -1,0 +1,74 @@
+{
+  "id": "ringtoss-12",
+  "name": "Grand Finale",
+  "hint": "Everything at once. Good luck!",
+  "gameType": "ringToss",
+  "time": 180,
+  "colors": 4,
+  "startPieces": 10,
+  "supply": null,
+  "specialChance": 0.12,
+  "targets": [
+    {
+      "kind": "peg",
+      "x": 105,
+      "y": 592,
+      "height": 120,
+      "multiplier": 2
+    },
+    {
+      "kind": "peg",
+      "x": 300,
+      "y": 900,
+      "height": 200
+    },
+    {
+      "kind": "peg",
+      "x": 495,
+      "y": 592,
+      "height": 120,
+      "multiplier": 2
+    }
+  ],
+  "obstacles": [
+    {
+      "type": "ledge",
+      "x": 105,
+      "y": 600,
+      "w": 170,
+      "h": 16,
+      "angle": 0
+    },
+    {
+      "type": "ledge",
+      "x": 495,
+      "y": 600,
+      "w": 170,
+      "h": 16,
+      "angle": 0
+    },
+    {
+      "type": "paddle",
+      "x": 300,
+      "y": 380,
+      "w": 150,
+      "h": 14,
+      "speed": -24
+    }
+  ],
+  "goal": {
+    "type": "fullPegs",
+    "value": 2
+  },
+  "stars": [
+    900,
+    1500,
+    2200
+  ],
+  "specialWeights": {
+    "rainbow": 0.35,
+    "golden": 0.25,
+    "heavy": 0.25,
+    "bomb": 0.15
+  }
+}

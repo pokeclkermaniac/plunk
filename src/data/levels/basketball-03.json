@@ -1,0 +1,41 @@
+{
+  "id": "basketball-03",
+  "name": "Nothing but Net",
+  "hint": "Swish = no rim, no backboard. Worth a bonus!",
+  "gameType": "basketball",
+  "time": 120,
+  "colors": 2,
+  "startPieces": 5,
+  "supply": null,
+  "specialChance": 0,
+  "targets": [
+    {
+      "kind": "hoop",
+      "x": 0,
+      "y": 300,
+      "facing": "right"
+    },
+    {
+      "kind": "hoop",
+      "x": 600,
+      "y": 300,
+      "facing": "left"
+    }
+  ],
+  "goal": {
+    "type": "swishes",
+    "value": 3
+  },
+  "stars": [
+    250,
+    500,
+    800
+  ],
+  "obstacles": [],
+  "specialWeights": {
+    "rainbow": 0.35,
+    "golden": 0.25,
+    "heavy": 0.25,
+    "bomb": 0.15
+  }
+}

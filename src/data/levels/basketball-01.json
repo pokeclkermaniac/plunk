@@ -1,0 +1,35 @@
+{
+  "id": "basketball-01",
+  "name": "Free Throw",
+  "hint": "Blast balls up and drop them through the hoop from above.",
+  "gameType": "basketball",
+  "time": 90,
+  "colors": 1,
+  "startPieces": 4,
+  "supply": null,
+  "specialChance": 0,
+  "targets": [
+    {
+      "kind": "hoop",
+      "x": 0,
+      "y": 320,
+      "facing": "right"
+    }
+  ],
+  "goal": {
+    "type": "baskets",
+    "value": 3
+  },
+  "stars": [
+    60,
+    150,
+    250
+  ],
+  "obstacles": [],
+  "specialWeights": {
+    "rainbow": 0.35,
+    "golden": 0.25,
+    "heavy": 0.25,
+    "bomb": 0.15
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "basketball-02",
+  "name": "Two Hoops",
+  "hint": "A second hoop and a second color. Streaks count per hoop.",
+  "gameType": "basketball",
+  "time": 90,
+  "colors": 2,
+  "startPieces": 5,
+  "supply": null,
+  "specialChance": 0,
+  "targets": [
+    {
+      "kind": "hoop",
+      "x": 0,
+      "y": 300,
+      "facing": "right"
+    },
+    {
+      "kind": "hoop",
+      "x": 600,
+      "y": 300,
+      "facing": "left"
+    }
+  ],
+  "goal": {
+    "type": "baskets",
+    "value": 6
+  },
+  "stars": [
+    200,
+    400,
+    650
+  ],
+  "obstacles": [],
+  "specialWeights": {
+    "rainbow": 0.35,
+    "golden": 0.25,
+    "heavy": 0.25,
+    "bomb": 0.15
+  }
+}

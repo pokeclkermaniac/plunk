@@ -1,0 +1,85 @@
+{
+  "id": "aquarium",
+  "name": "Aquarium",
+  "desc": "Fish swimming behind the tank, sandy floor.",
+  "frame": {
+    "shell": "#1f6f78",
+    "shellDark": "#0f3d43",
+    "highlight": "#5fb3bb",
+    "trim": "#e8c872",
+    "bezel": "#0a2a2e",
+    "outline": "#00000000",
+    "outlineWidth": 0,
+    "radius": 40,
+    "scuffs": false,
+    "gloss": 0.3
+  },
+  "buttons": {
+    "left": "#ff8f5a",
+    "right": "#e8c872",
+    "cap": "#ffffff",
+    "base": "#0a2a2e"
+  },
+  "water": {
+    "top": "#5fd3c6",
+    "bottom": "#0f6b7a",
+    "alpha": 0.5,
+    "surface": "#e6fffb",
+    "front": 0.1
+  },
+  "rings": {
+    "colors": [
+      "#ff5a5a",
+      "#3a8fff",
+      "#ffe14a",
+      "#4cd97b",
+      "#b46bff",
+      "#ff9f43"
+    ],
+    "style": "glossy",
+    "outline": "#00000040",
+    "outlineWidth": 1.5
+  },
+  "balls": {
+    "colors": [
+      "#ff5a5a",
+      "#3a8fff",
+      "#ffe14a",
+      "#4cd97b",
+      "#b46bff",
+      "#ff9f43"
+    ],
+    "style": "glossy",
+    "outline": "#00000040",
+    "outlineWidth": 1.5
+  },
+  "peg": {
+    "color": "#f7f0dc",
+    "shade": "#c9b98a"
+  },
+  "hoop": {
+    "rim": "#ff8f5a",
+    "board": "#f7f0dc",
+    "boardEdge": "#c9b98a",
+    "net": "#ffffff",
+    "tube": "#e6fffb"
+  },
+  "obstacle": {
+    "color": "#8a6d4a",
+    "shade": "#5c4630"
+  },
+  "background": {
+    "style": "fish",
+    "top": "#1c7f8c",
+    "bottom": "#0b3f4a",
+    "accent": "#e8d29a"
+  },
+  "ui": {
+    "text": "#ffffff",
+    "panel": "#0f3d43",
+    "accent": "#e8c872",
+    "font": "'Trebuchet MS', Verdana, sans-serif"
+  },
+  "pixel": false,
+  "sound": "toy"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "ringtoss-01",
+  "name": "First Splash",
+  "hint": "Tap the buttons to blast bubbles. Float rings onto the pegs!",
+  "gameType": "ringToss",
+  "time": null,
+  "colors": 2,
+  "startPieces": 6,
+  "supply": 10,
+  "specialChance": 0,
+  "targets": [
+    {
+      "kind": "peg",
+      "x": 110,
+      "y": 900,
+      "height": 150
+    },
+    {
+      "kind": "peg",
+      "x": 490,
+      "y": 900,
+      "height": 150
+    }
+  ],
+  "goal": {
+    "type": "score",
+    "value": 150
+  },
+  "stars": [
+    150,
+    300,
+    450
+  ],
+  "obstacles": [],
+  "specialWeights": {
+    "rainbow": 0.35,
+    "golden": 0.25,
+    "heavy": 0.25,
+    "bomb": 0.15
+  }
+}

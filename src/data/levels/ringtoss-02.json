@@ -1,0 +1,47 @@
+{
+  "id": "ringtoss-02",
+  "name": "Stack Attack",
+  "hint": "Fill one peg with a single color for a big bonus.",
+  "gameType": "ringToss",
+  "time": null,
+  "colors": 2,
+  "startPieces": 6,
+  "supply": 14,
+  "specialChance": 0,
+  "targets": [
+    {
+      "kind": "peg",
+      "x": 92,
+      "y": 900,
+      "height": 150
+    },
+    {
+      "kind": "peg",
+      "x": 300,
+      "y": 900,
+      "height": 220
+    },
+    {
+      "kind": "peg",
+      "x": 508,
+      "y": 900,
+      "height": 150
+    }
+  ],
+  "goal": {
+    "type": "fullPegs",
+    "value": 1
+  },
+  "stars": [
+    300,
+    550,
+    800
+  ],
+  "obstacles": [],
+  "specialWeights": {
+    "rainbow": 0.35,
+    "golden": 0.25,
+    "heavy": 0.25,
+    "bomb": 0.15
+  }
+}

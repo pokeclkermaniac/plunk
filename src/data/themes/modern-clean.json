@@ -1,0 +1,85 @@
+{
+  "id": "modern-clean",
+  "name": "Modern Clean",
+  "desc": "Glossy, minimal, soft shadows.",
+  "frame": {
+    "shell": "#f4f6f8",
+    "shellDark": "#c9d0d8",
+    "highlight": "#ffffff",
+    "trim": "#2d9cdb",
+    "bezel": "#d5dbe2",
+    "outline": "#00000000",
+    "outlineWidth": 0,
+    "radius": 70,
+    "scuffs": false,
+    "gloss": 0.5
+  },
+  "buttons": {
+    "left": "#2d9cdb",
+    "right": "#27ae60",
+    "cap": "#ffffff",
+    "base": "#c9d0d8"
+  },
+  "water": {
+    "top": "#c8ecfb",
+    "bottom": "#5bb6e0",
+    "alpha": 0.5,
+    "surface": "#ffffff",
+    "front": 0.08
+  },
+  "rings": {
+    "colors": [
+      "#eb5757",
+      "#2f80ed",
+      "#f2c94c",
+      "#27ae60",
+      "#9b51e0",
+      "#f2994a"
+    ],
+    "style": "flat",
+    "outline": "#00000020",
+    "outlineWidth": 1
+  },
+  "balls": {
+    "colors": [
+      "#eb5757",
+      "#2f80ed",
+      "#f2c94c",
+      "#27ae60",
+      "#9b51e0",
+      "#f2994a"
+    ],
+    "style": "flat",
+    "outline": "#00000020",
+    "outlineWidth": 1
+  },
+  "peg": {
+    "color": "#ffffff",
+    "shade": "#c2cbd4"
+  },
+  "hoop": {
+    "rim": "#f2994a",
+    "board": "#ffffff",
+    "boardEdge": "#d9e0e6",
+    "net": "#ffffff",
+    "tube": "#ffffff"
+  },
+  "obstacle": {
+    "color": "#ffffff",
+    "shade": "#c2cbd4"
+  },
+  "background": {
+    "style": "plain",
+    "top": "#e9f2f8",
+    "bottom": "#b9d3e6",
+    "accent": "#ffffff"
+  },
+  "ui": {
+    "text": "#1f2d3d",
+    "panel": "#ffffff",
+    "accent": "#2d9cdb",
+    "font": "'Helvetica Neue', Helvetica, Arial, sans-serif"
+  },
+  "pixel": false,
+  "sound": "toy"
+}

@@ -1,0 +1,86 @@
+{
+  "id": "cartoony",
+  "name": "Cartoony",
+  "desc": "Thick outlines and bouncy, squashy pieces.",
+  "frame": {
+    "shell": "#7b4dff",
+    "shellDark": "#4b25b8",
+    "highlight": "#b59cff",
+    "trim": "#ffde3b",
+    "bezel": "#2b1470",
+    "outline": "#1a1033",
+    "outlineWidth": 6,
+    "radius": 80,
+    "scuffs": false,
+    "gloss": 0.25
+  },
+  "buttons": {
+    "left": "#ff5e8a",
+    "right": "#3bdcff",
+    "cap": "#ffffff",
+    "base": "#2b1470"
+  },
+  "water": {
+    "top": "#8ff0e6",
+    "bottom": "#21a7c9",
+    "alpha": 0.6,
+    "surface": "#ffffff",
+    "front": 0.1
+  },
+  "rings": {
+    "colors": [
+      "#ff4d4d",
+      "#3d7bff",
+      "#ffd23d",
+      "#3ddc6a",
+      "#c04dff",
+      "#ff9a3d"
+    ],
+    "style": "cartoon",
+    "outline": "#1a1033",
+    "outlineWidth": 4
+  },
+  "balls": {
+    "colors": [
+      "#ff4d4d",
+      "#3d7bff",
+      "#ffd23d",
+      "#3ddc6a",
+      "#c04dff",
+      "#ff9a3d"
+    ],
+    "style": "cartoon",
+    "outline": "#1a1033",
+    "outlineWidth": 4
+  },
+  "peg": {
+    "color": "#ffffff",
+    "shade": "#c9b8ff"
+  },
+  "hoop": {
+    "rim": "#ff7a1a",
+    "board": "#ffffff",
+    "boardEdge": "#1a1033",
+    "net": "#ffffff",
+    "tube": "#ffffff"
+  },
+  "obstacle": {
+    "color": "#ffde3b",
+    "shade": "#c9a400"
+  },
+  "background": {
+    "style": "dots",
+    "top": "#5ad1e8",
+    "bottom": "#2a7fbf",
+    "accent": "#ffffff"
+  },
+  "ui": {
+    "text": "#ffffff",
+    "panel": "#4b25b8",
+    "accent": "#ffde3b",
+    "font": "'Comic Sans MS', 'Chalkboard SE', 'Trebuchet MS', sans-serif"
+  },
+  "pixel": false,
+  "sound": "toy",
+  "squash": true
+}

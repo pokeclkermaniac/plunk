@@ -1,0 +1,45 @@
+{
+  "id": "basketball-04",
+  "name": "Moving Target",
+  "hint": "The middle hoop slides. Sink one in every hoop.",
+  "gameType": "basketball",
+  "time": 120,
+  "colors": 3,
+  "startPieces": 5,
+  "supply": null,
+  "specialChance": 0,
+  "targets": [
+    {
+      "kind": "hoop",
+      "x": 600,
+      "y": 320,
+      "facing": "left"
+    },
+    {
+      "kind": "hoop",
+      "x": 210,
+      "y": 240,
+      "facing": "right",
+      "move": {
+        "dx": 110,
+        "periodSec": 7
+      }
+    }
+  ],
+  "goal": {
+    "type": "everyHoop",
+    "value": 2
+  },
+  "stars": [
+    150,
+    400,
+    700
+  ],
+  "obstacles": [],
+  "specialWeights": {
+    "rainbow": 0.35,
+    "golden": 0.25,
+    "heavy": 0.25,
+    "bomb": 0.15
+  }
+}
