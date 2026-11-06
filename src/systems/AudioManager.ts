@@ -120,7 +120,15 @@ class AudioManagerImpl {
 
   private noise(
     dur: number,
-    opts: { gain?: number; freq?: number; q?: number; type?: BiquadFilterType; delay?: number; to?: number; bus?: GainNode } = {},
+    opts: {
+      gain?: number;
+      freq?: number;
+      q?: number;
+      type?: BiquadFilterType;
+      delay?: number;
+      to?: number;
+      bus?: GainNode;
+    } = {},
   ): void {
     const ctx = this.ctx;
     if (!ctx || !this.noiseBuf) return;
@@ -137,7 +145,10 @@ class AudioManagerImpl {
     g.gain.setValueAtTime(0.0001, t0);
     g.gain.exponentialRampToValueAtTime(opts.gain ?? 0.3, t0 + 0.01);
     g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-    src.connect(f).connect(g).connect(opts.bus ?? this.sfxBus);
+    src
+      .connect(f)
+      .connect(g)
+      .connect(opts.bus ?? this.sfxBus);
     src.start(t0, Math.random() * 0.5);
     src.stop(t0 + dur + 0.05);
   }
@@ -286,19 +297,27 @@ class AudioManagerImpl {
       const bus = this.musicBus;
       const wave: OscillatorType = this.pack === 'chip' ? 'square' : 'triangle';
       if (step % 8 === 0) {
-        for (const f of chord) this.tone(f, spb * 7.5, { type: wave, gain: 0.05, delay: t, attack: 0.12, bus, filter: 1100 });
+        for (const f of chord)
+          this.tone(f, spb * 7.5, { type: wave, gain: 0.05, delay: t, attack: 0.12, bus, filter: 1100 });
         this.tone(chord[0] / 2, spb * 3, { type: 'sine', gain: 0.16, delay: t, bus });
       }
       if (step % 8 === 4) this.tone(chord[0] / 2, spb * 2, { type: 'sine', gain: 0.12, delay: t, bus });
       // little melody blips
       if (step % 4 === 2 && Math.random() < 0.55) {
         const f = chord[1 + Math.floor(Math.random() * 3)] * 2;
-        this.tone(f, spb * 1.5, { type: this.pack === 'chip' ? 'square' : 'sine', gain: 0.04, delay: t, bus, filter: 2500 });
+        this.tone(f, spb * 1.5, {
+          type: this.pack === 'chip' ? 'square' : 'sine',
+          gain: 0.04,
+          delay: t,
+          bus,
+          filter: 2500,
+        });
       }
       // drums: soft kick, snare-ish noise, hats
       if (step % 4 === 0) this.tone(95, 0.18, { type: 'sine', gain: 0.22, to: 45, delay: t, bus });
       if (step % 8 === 4) this.noise(0.12, { freq: 1800, q: 0.8, gain: 0.07, delay: t, bus });
-      if (step % 2 === 1 || this.intensity > 0) this.noise(0.03, { freq: 8000, q: 1, gain: 0.025, type: 'highpass', delay: t, bus });
+      if (step % 2 === 1 || this.intensity > 0)
+        this.noise(0.03, { freq: 8000, q: 1, gain: 0.025, type: 'highpass', delay: t, bus });
       this.nextBeat += spb;
       this.beat++;
     }

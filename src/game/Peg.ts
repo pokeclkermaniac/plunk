@@ -96,10 +96,20 @@ export class Peg extends Target {
     const rel = b.position.y - this.tipY; // + = ring centre below the tip
     const maxTilt = (TUNING.CAPTURE_MAX_ANGLE_DEG * Math.PI) / 180;
     // Normal capture: centre crossing the tip while moving down.
-    if (rel > -TUNING.CAPTURE_BAND_ABOVE && rel < TUNING.CAPTURE_BAND_BELOW && b.velocity.y > -0.2 && tilt < maxTilt)
+    if (
+      rel > -TUNING.CAPTURE_BAND_ABOVE &&
+      rel < TUNING.CAPTURE_BAND_BELOW &&
+      b.velocity.y > -0.2 &&
+      tilt < maxTilt
+    )
       return true;
     // Fallback: the ring is already threaded on the peg (below the tip, above the stack).
-    if (rel >= TUNING.CAPTURE_BAND_BELOW && b.position.y < this.stackTopY - 4 && Math.abs(lx) < halfGap && tilt < 1.4)
+    if (
+      rel >= TUNING.CAPTURE_BAND_BELOW &&
+      b.position.y < this.stackTopY - 4 &&
+      Math.abs(lx) < halfGap &&
+      tilt < 1.4
+    )
       return true;
     return false;
   }
@@ -170,7 +180,9 @@ export class Peg extends Target {
     this.glow.clear();
     if (level <= 0) return;
     const a = Math.min(0.5, 0.12 + level * 0.08);
-    this.glow.fillStyle(color, a).fillEllipse(this.x, this.baseY - this.height / 2, 46 + level * 6, this.height + 30);
+    this.glow
+      .fillStyle(color, a)
+      .fillEllipse(this.x, this.baseY - this.height / 2, 46 + level * 6, this.height + 30);
   }
 
   destroy(): void {

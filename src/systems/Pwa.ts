@@ -32,10 +32,15 @@ export const Pwa = {
     }
   },
   isStandalone(): boolean {
-    return window.matchMedia?.('(display-mode: standalone)').matches || (navigator as any).standalone === true;
+    return (
+      window.matchMedia?.('(display-mode: standalone)').matches || (navigator as any).standalone === true
+    );
   },
   isIOS(): boolean {
-    return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    return (
+      /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    );
   },
   onChange(l: () => void): () => void {
     listeners.add(l);

@@ -34,11 +34,16 @@ export class CollectionScene extends Phaser.Scene {
     super('Collection');
   }
 
-  init(data: { tab?: Tab }): void {
+  private retheme = false;
+
+  init(data: { tab?: Tab; retheme?: boolean }): void {
     this.tab = data.tab ?? 'themes';
+    this.retheme = !!data.retheme;
   }
 
   create(): void {
+    // Textures are regenerated only here, after the old screen's objects are gone.
+    if (this.retheme) applyTheme(this);
     backdrop(this);
     restartOnResize(this, { tab: this.tab });
     const W = this.scale.width;
@@ -53,10 +58,19 @@ export class CollectionScene extends Phaser.Scene {
     const tw = land ? 150 : 112;
     tabs.forEach((tb, i) => {
       const x = cx - ((tabs.length - 1) * (tw + 6)) / 2 + i * (tw + 6);
-      button(this, x, land ? 98 : 170, tw, 54, tb === 'themes' ? 'Themes' : slotLabel(tb), () => this.scene.restart({ tab: tb }), {
-        color: this.tab === tb ? t.frame.trim : '#7d8590',
-        size: land ? 20 : 18,
-      });
+      button(
+        this,
+        x,
+        land ? 98 : 170,
+        tw,
+        54,
+        tb === 'themes' ? 'Themes' : slotLabel(tb),
+        () => this.scene.restart({ tab: tb }),
+        {
+          color: this.tab === tb ? t.frame.trim : '#7d8590',
+          size: land ? 20 : 18,
+        },
+      );
     });
 
     // preview
@@ -65,7 +79,8 @@ export class CollectionScene extends Phaser.Scene {
 
     // grid of items
     const unlocked = this.tab === 'themes' ? Save.data.unlocked.themes : Save.data.unlocked[this.tab];
-    const equippedId = this.tab === 'themes' ? Save.data.equipped.theme : Save.data.equipped[EQUIP_KEY[this.tab]];
+    const equippedId =
+      this.tab === 'themes' ? Save.data.equipped.theme : Save.data.equipped[EQUIP_KEY[this.tab]];
     const cols = land ? 3 : 2;
     const cw = land ? 250 : 320;
     const ch = land ? 100 : 108;
@@ -94,14 +109,22 @@ export class CollectionScene extends Phaser.Scene {
         {
           color: id === equippedId ? '#ffffff' : has ? sw : '#5c6370',
           size: 24,
-          sub: has ? (id === equippedId ? 'Equipped' : 'Tap to equip') : lvl ? `Player level ${lvl}` : 'Locked',
+          sub: has
+            ? id === equippedId
+              ? 'Equipped'
+              : 'Tap to equip'
+            : lvl
+              ? `Player level ${lvl}`
+              : 'Locked',
         },
       );
       void th;
       if (has) {
         const dots = this.add.graphics();
         const colors = this.tab === 'balls' ? th.balls.colors : th.rings.colors;
-        colors.slice(0, 6).forEach((c, k) => dots.fillStyle(hex(c), 1).fillCircle(x - 50 + k * 20, y - ch / 2 + 16, 7));
+        colors
+          .slice(0, 6)
+          .forEach((c, k) => dots.fillStyle(hex(c), 1).fillCircle(x - 50 + k * 20, y - ch / 2 + 16, 7));
       }
       void card;
     });
@@ -138,8 +161,7 @@ export class CollectionScene extends Phaser.Scene {
       eq[EQUIP_KEY[this.tab]] = id;
     }
     Save.save();
-    applyTheme(this);
-    this.scene.restart({ tab: this.tab });
+    this.scene.restart({ tab: this.tab, retheme: true });
   }
 
   private preview(x: number, y: number, s: number): void {
@@ -160,7 +182,9 @@ export class CollectionScene extends Phaser.Scene {
       const px = bg.x - 120 * s + i * 120 * s;
       c.add(this.add.image(px, bg.y + 200 * s, `ring_back_${k}`).setScale(texScale() * s * 1.2));
       c.add(this.add.image(px, bg.y + 200 * s, `ring_front_${k}`).setScale(texScale() * s * 1.2));
-      c.add(this.add.image(px + 60 * s, bg.y - 120 * s + i * 40 * s, `ball_${k}`).setScale(texScale() * s * 1.2));
+      c.add(
+        this.add.image(px + 60 * s, bg.y - 120 * s + i * 40 * s, `ball_${k}`).setScale(texScale() * s * 1.2),
+      );
     }
     c.add(frame);
     c.add(this.add.image(-fw / 2 + 175 * s, fh / 2 - 270 * s, 'btn_left_up').setScale(texScale() * s * 0.9));

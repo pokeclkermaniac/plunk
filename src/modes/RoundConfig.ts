@@ -35,14 +35,7 @@ export interface ObstacleDef {
 }
 
 export type GoalType =
-  | 'score'
-  | 'fullPegs'
-  | 'fullPegColor'
-  | 'noWrong'
-  | 'baskets'
-  | 'swishes'
-  | 'fullTube'
-  | 'everyHoop';
+  'score' | 'fullPegs' | 'fullPegColor' | 'noWrong' | 'baskets' | 'swishes' | 'fullTube' | 'everyHoop';
 
 export interface GoalDef {
   type: GoalType;

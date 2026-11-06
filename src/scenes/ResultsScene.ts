@@ -79,7 +79,13 @@ export class ResultsScene extends Phaser.Scene {
       y += 90;
       if (c.newBest && s.score > 0) {
         const nb = text(this, cx, y, '★ NEW BEST! ★', 34, t.frame.trim, { fontStyle: 'bold' });
-        this.tweens.add({ targets: nb, scale: { from: 0.9, to: 1.1 }, yoyo: true, repeat: -1, duration: 400 });
+        this.tweens.add({
+          targets: nb,
+          scale: { from: 0.9, to: 1.1 },
+          yoyo: true,
+          repeat: -1,
+          duration: 400,
+        });
       } else text(this, cx, y, `Best: ${c.best}`, 28).setAlpha(0.85);
       y += 50;
     }
@@ -99,7 +105,12 @@ export class ResultsScene extends Phaser.Scene {
       lines.push(`Rings landed: ${st.landed}`, `Full pegs: ${st.fullPegs}`, `Best streak: x${st.bestStreak}`);
       if (st.wrong) lines.push(`Wrong colors: ${st.wrong}`);
     } else {
-      lines.push(`Baskets: ${st.baskets}`, `Swishes: ${st.swishes}`, `Best streak: x${st.bestStreak}`, `Full tubes: ${st.fullTubes}`);
+      lines.push(
+        `Baskets: ${st.baskets}`,
+        `Swishes: ${st.swishes}`,
+        `Best streak: x${st.bestStreak}`,
+        `Full tubes: ${st.fullTubes}`,
+      );
     }
     if (s.boostersUsed) lines.push('(boosters used: counts as a boosted best)');
     text(this, cx, y + 60, lines.join('\n'), 26, '#ffffff', { lineSpacing: 8 });
@@ -108,9 +119,17 @@ export class ResultsScene extends Phaser.Scene {
     // XP bar
     const save = Save.data;
     const barY = top + ph - (c.rewards.length ? 110 : 60);
-    text(this, cx, barY - 34, `+${c.xp} XP${c.levelsGained ? `  ·  LEVEL UP! Lv ${save.level}` : `  ·  Lv ${save.level}`}`, 26, t.frame.trim, {
-      fontStyle: 'bold',
-    });
+    text(
+      this,
+      cx,
+      barY - 34,
+      `+${c.xp} XP${c.levelsGained ? `  ·  LEVEL UP! Lv ${save.level}` : `  ·  Lv ${save.level}`}`,
+      26,
+      t.frame.trim,
+      {
+        fontStyle: 'bold',
+      },
+    );
     const bw = land ? 520 : 480;
     const g = this.add.graphics();
     g.fillStyle(0x000000, 0.4).fillRoundedRect(cx - bw / 2, barY - 10, bw, 20, 10);
@@ -122,7 +141,9 @@ export class ResultsScene extends Phaser.Scene {
       duration: 900,
       onUpdate: (tw) => {
         fill.clear();
-        fill.fillStyle(0x7cff6b, 1).fillRoundedRect(cx - bw / 2, barY - 10, Math.max(20, bw * (tw.getValue() ?? 0)), 20, 10);
+        fill
+          .fillStyle(0x7cff6b, 1)
+          .fillRoundedRect(cx - bw / 2, barY - 10, Math.max(20, bw * (tw.getValue() ?? 0)), 20, 10);
       },
     });
     if (c.rewards.length) {
@@ -137,12 +158,20 @@ export class ResultsScene extends Phaser.Scene {
     const bwid = land ? 300 : 460;
     if (land) {
       button(this, cx - 320, by, bwid, 76, 'Play again', () => this.again());
-      if (nextLevel !== null) button(this, cx, by, bwid, 76, 'Next level ›', () => this.startLevel(nextLevel), { color: t.buttons.right });
+      if (nextLevel !== null)
+        button(this, cx, by, bwid, 76, 'Next level ›', () => this.startLevel(nextLevel), {
+          color: t.buttons.right,
+        });
       button(this, cx + 320, by, bwid, 76, 'Menu', () => this.toMenu(), { color: '#9aa7b4' });
     } else {
       button(this, cx, by, bwid, 90, 'Play again', () => this.again());
-      if (nextLevel !== null) button(this, cx, by + 104, bwid, 90, 'Next level ›', () => this.startLevel(nextLevel), { color: t.buttons.right });
-      button(this, cx, by + (nextLevel !== null ? 208 : 104), bwid, 90, 'Menu', () => this.toMenu(), { color: '#9aa7b4' });
+      if (nextLevel !== null)
+        button(this, cx, by + 104, bwid, 90, 'Next level ›', () => this.startLevel(nextLevel), {
+          color: t.buttons.right,
+        });
+      button(this, cx, by + (nextLevel !== null ? 208 : 104), bwid, 90, 'Menu', () => this.toMenu(), {
+        color: '#9aa7b4',
+      });
     }
     AudioManager.startMusic();
   }

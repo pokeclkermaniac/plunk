@@ -41,7 +41,14 @@ export class MenuScene extends Phaser.Scene {
     if (this.screen === 'main') {
       const logoY = land ? 120 : 250;
       const logo = heading(this, cx, logoY, 'PLUNK!', land ? 110 : 132);
-      this.tweens.add({ targets: logo, angle: { from: -2, to: 2 }, duration: 1600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      this.tweens.add({
+        targets: logo,
+        angle: { from: -2, to: 2 },
+        duration: 1600,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.easeInOut',
+      });
       text(this, cx, logoY + (land ? 72 : 92), 'Water Toy Games', land ? 28 : 34).setAlpha(0.9);
       const bw = land ? 380 : 460;
       const bh = land ? 74 : 96;
@@ -49,14 +56,24 @@ export class MenuScene extends Phaser.Scene {
       let y = land ? 300 : 520;
       button(this, cx, y, bw, bh, 'PLAY', () => this.go('type'), { size: land ? 38 : 46 });
       y += gap;
-      button(this, cx, y, bw, bh, 'Collection', () => this.scene.start('Collection'), { color: ThemeManager.current.buttons.right });
+      button(this, cx, y, bw, bh, 'Collection', () => this.scene.start('Collection'), {
+        color: ThemeManager.current.buttons.right,
+      });
       y += gap;
-      button(this, cx, y, bw, bh, 'Profile', () => this.scene.start('Profile'), { color: ThemeManager.current.buttons.left });
+      button(this, cx, y, bw, bh, 'Profile', () => this.scene.start('Profile'), {
+        color: ThemeManager.current.buttons.left,
+      });
       y += gap;
       button(this, cx, y, bw, bh, 'Settings', () => this.scene.start('Settings'), { color: '#9aa7b4' });
       y += gap * 0.85;
       const s = Save.data;
-      text(this, cx, Math.min(H - 70, y + 10), `Player level ${s.level}  ·  ${s.xp}/${xpToNext(s.level)} XP`, 24).setAlpha(0.85);
+      text(
+        this,
+        cx,
+        Math.min(H - 70, y + 10),
+        `Player level ${s.level}  ·  ${s.xp}/${xpToNext(s.level)} XP`,
+        24,
+      ).setAlpha(0.85);
       this.installHint(cx, H - 30);
     } else if (this.screen === 'type') {
       heading(this, cx, land ? 90 : 200, 'Choose a game', land ? 52 : 60);
@@ -89,27 +106,57 @@ export class MenuScene extends Phaser.Scene {
       const s = Save.data;
       const secs = s.settings.roundSeconds || TUNING.TIMED_ROUND_SECONDS;
       const best = ring ? s.bests.ringTimed : s.bests.basketballTimed;
-      button(this, cx, y, bw, bh, ring ? 'Timed' : 'Shootout', () => this.play(timedConfig(this.gameType, secs)), {
-        sub: `${secs} seconds${best ? ` · best ${best}` : ''}${ring ? '' : ' · Hot Hands finale'}`,
-      });
+      button(
+        this,
+        cx,
+        y,
+        bw,
+        bh,
+        ring ? 'Timed' : 'Shootout',
+        () => this.play(timedConfig(this.gameType, secs)),
+        {
+          sub: `${secs} seconds${best ? ` · best ${best}` : ''}${ring ? '' : ' · Hot Hands finale'}`,
+        },
+      );
       y += gap;
-      button(this, cx, y, bw, bh, 'Levels', () => this.scene.start('LevelSelect', { gameType: this.gameType }), {
-        sub: ring ? '12 hand-made challenges' : '6 hand-made challenges',
-        color: ThemeManager.current.buttons.left,
-      });
+      button(
+        this,
+        cx,
+        y,
+        bw,
+        bh,
+        'Levels',
+        () => this.scene.start('LevelSelect', { gameType: this.gameType }),
+        {
+          sub: ring ? '12 hand-made challenges' : '6 hand-made challenges',
+          color: ThemeManager.current.buttons.left,
+        },
+      );
       y += gap;
       if (ring)
         button(this, cx, y, bw, bh, 'Endless', () => this.play(endlessConfig()), {
           sub: `Limited rings, full pegs refill${s.bests.endless ? ` · best ${s.bests.endless}` : ''}`,
           color: ThemeManager.current.buttons.right,
         });
-      else button(this, cx, y, bw, bh, 'Endless', () => {}, { sub: 'Coming in a later update', disabled: true });
+      else
+        button(this, cx, y, bw, bh, 'Endless', () => {}, { sub: 'Coming in a later update', disabled: true });
       y += gap;
-      button(this, cx, y, bw, bh, ring ? 'Versus (2P)' : '1-on-1 (2P)', () => this.play(versusConfig(this.gameType)), {
-        sub: land ? 'P1 = left button · P2 = right button' : 'Best in landscape · one button each',
-        color: '#ff8a65',
+      button(
+        this,
+        cx,
+        y,
+        bw,
+        bh,
+        ring ? 'Versus (2P)' : '1-on-1 (2P)',
+        () => this.play(versusConfig(this.gameType)),
+        {
+          sub: land ? 'P1 = left button · P2 = right button' : 'Best in landscape · one button each',
+          color: '#ff8a65',
+        },
+      );
+      button(this, cx, H - (land ? 55 : 110), 260, land ? 66 : 76, '‹ Back', () => this.go('type'), {
+        color: '#9aa7b4',
       });
-      button(this, cx, H - (land ? 55 : 110), 260, land ? 66 : 76, '‹ Back', () => this.go('type'), { color: '#9aa7b4' });
     }
   }
 
@@ -141,7 +188,10 @@ export class MenuScene extends Phaser.Scene {
       const objs =
         i % 3 === 0
           ? [this.add.image(x, y, `ball_${k}`).setScale(texScale() * 0.9)]
-          : [this.add.image(x, y, `ring_back_${k}`).setScale(texScale()), this.add.image(x, y, `ring_front_${k}`).setScale(texScale())];
+          : [
+              this.add.image(x, y, `ring_back_${k}`).setScale(texScale()),
+              this.add.image(x, y, `ring_front_${k}`).setScale(texScale()),
+            ];
       for (const o of objs) o.setAlpha(0.55);
       this.tweens.add({
         targets: objs,
@@ -158,10 +208,19 @@ export class MenuScene extends Phaser.Scene {
   private installHint(x: number, y: number): void {
     if (Pwa.isStandalone()) return;
     if (Pwa.canPrompt()) {
-      button(this, x, y - 30, 330, 60, '⬇ Install Plunk!', () => void Pwa.prompt().then(() => this.scene.restart()), {
-        color: '#4caf50',
-        size: 24,
-      });
+      button(
+        this,
+        x,
+        y - 30,
+        330,
+        60,
+        '⬇ Install Plunk!',
+        () => void Pwa.prompt().then(() => this.scene.restart()),
+        {
+          color: '#4caf50',
+          size: 24,
+        },
+      );
     } else if (Pwa.isIOS()) {
       text(this, x, y, 'Tip: Share → "Add to Home Screen" to install & play offline', 20).setAlpha(0.75);
     }

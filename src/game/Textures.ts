@@ -65,7 +65,9 @@ export function css(c: string, a = 1): string {
 export function shade(c: string, f: number): string {
   const [r, g, b] = rgb(c);
   const m = (v: number) => Math.round(f < 0 ? v * (1 + f) : v + (255 - v) * f);
-  return '#' + [m(r), m(g), m(b)].map((v) => Math.max(0, Math.min(255, v)).toString(16).padStart(2, '0')).join('');
+  return (
+    '#' + [m(r), m(g), m(b)].map((v) => Math.max(0, Math.min(255, v)).toString(16).padStart(2, '0')).join('')
+  );
 }
 
 // ── symbols (reserved for the colourblind mode; embossed on pieces) ──
@@ -108,7 +110,9 @@ export function drawSymbol(ctx: Ctx, sym: string, x: number, y: number, s: numbe
 
 function rainbowGradient(ctx: Ctx, x0: number, x1: number): CanvasGradient {
   const g = ctx.createLinearGradient(x0, 0, x1, 0);
-  ['#ff3b3b', '#ff9a1f', '#ffe11f', '#3bd16f', '#2f8bff', '#a64dff'].forEach((c, i) => g.addColorStop(i / 5, c));
+  ['#ff3b3b', '#ff9a1f', '#ffe11f', '#3bd16f', '#2f8bff', '#a64dff'].forEach((c, i) =>
+    g.addColorStop(i / 5, c),
+  );
   return g;
 }
 function goldGradient(ctx: Ctx, y0: number, y1: number): CanvasGradient {
@@ -128,12 +132,34 @@ interface PieceLook {
   golden: boolean;
 }
 
-function lookFor(ctx: Ctx, p: Piece, colors: string[], x0: number, x1: number, y0: number, y1: number): PieceLook {
+function lookFor(
+  ctx: Ctx,
+  p: Piece,
+  colors: string[],
+  x0: number,
+  x1: number,
+  y0: number,
+  y1: number,
+): PieceLook {
   const base = colors[p.color % colors.length];
   if (p.kind === 'rainbow')
-    return { fill: rainbowGradient(ctx, x0, x1), base: '#ffffff', symbol: null, heavy: false, bomb: false, golden: false };
+    return {
+      fill: rainbowGradient(ctx, x0, x1),
+      base: '#ffffff',
+      symbol: null,
+      heavy: false,
+      bomb: false,
+      golden: false,
+    };
   if (p.kind === 'golden')
-    return { fill: goldGradient(ctx, y0, y1), base: '#f5c518', symbol: 'star', heavy: false, bomb: false, golden: true };
+    return {
+      fill: goldGradient(ctx, y0, y1),
+      base: '#f5c518',
+      symbol: 'star',
+      heavy: false,
+      bomb: false,
+      golden: true,
+    };
   if (p.kind === 'bomb')
     return { fill: '#26262b', base: '#26262b', symbol: null, heavy: false, bomb: true, golden: false };
   return {
@@ -206,7 +232,15 @@ function drawRingHalf(ctx: Ctx, p: Piece, theme: Theme, front: boolean): void {
   // gloss highlight
   if (style !== 'flat') {
     ctx.beginPath();
-    ctx.ellipse(cx, cy - thick * 0.22, rx, ry, 0, front ? 0.35 : Math.PI + 0.25, front ? Math.PI - 0.35 : Math.PI * 2 - 0.25);
+    ctx.ellipse(
+      cx,
+      cy - thick * 0.22,
+      rx,
+      ry,
+      0,
+      front ? 0.35 : Math.PI + 0.25,
+      front ? Math.PI - 0.35 : Math.PI * 2 - 0.25,
+    );
     ctx.strokeStyle = style === 'clay' ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.55)';
     ctx.lineWidth = Math.max(1.5, thick * 0.18);
     ctx.stroke();
@@ -626,7 +660,7 @@ function drawFrame(ctx: Ctx, theme: Theme, bounds: FrameRect, landscape: boolean
   // scuffs
   if (f.scuffs) {
     let s = 3;
-    const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+    const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
     ctx.strokeStyle = 'rgba(255,255,255,0.12)';
     ctx.lineWidth = 1.5;
     for (let i = 0; i < 26; i++) {
@@ -640,7 +674,7 @@ function drawFrame(ctx: Ctx, theme: Theme, bounds: FrameRect, landscape: boolean
   }
   if (f.lumpy) {
     let s = 11;
-    const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+    const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
     for (let i = 0; i < 60; i++) {
       ctx.beginPath();
       ctx.ellipse(rnd() * W, rnd() * H, 8 + rnd() * 26, 5 + rnd() * 14, rnd() * 3, 0, Math.PI * 2);
@@ -726,7 +760,9 @@ function drawFrame(ctx: Ctx, theme: Theme, bounds: FrameRect, landscape: boolean
 
 /** Toy frame bounds in world coords for each orientation. */
 export function frameBounds(landscape: boolean): FrameRect {
-  return landscape ? { x: -340, y: -60, w: TUNING.TANK_W + 680, h: TUNING.TANK_H + 120 } : { x: -50, y: -150, w: TUNING.TANK_W + 100, h: TUNING.TANK_H + 450 };
+  return landscape
+    ? { x: -340, y: -60, w: TUNING.TANK_W + 680, h: TUNING.TANK_H + 120 }
+    : { x: -50, y: -150, w: TUNING.TANK_W + 100, h: TUNING.TANK_H + 450 };
 }
 
 /** Generates every themed texture. Call on boot and after a theme change. */
@@ -738,21 +774,84 @@ export function generateTextures(scene: Phaser.Scene, theme: Theme): void {
   kinds.push({ color: 0, kind: 'rainbow' }, { color: 0, kind: 'golden' }, { color: 0, kind: 'bomb' });
   for (const p of kinds) {
     const k = pieceKey(p);
-    makeCanvas(scene, `ring_back_${k}`, RING_TEX_W, RING_TEX_H, (ctx) => drawRingHalf(ctx, p, theme, false), px);
-    makeCanvas(scene, `ring_front_${k}`, RING_TEX_W, RING_TEX_H, (ctx) => drawRingHalf(ctx, p, theme, true), px);
+    makeCanvas(
+      scene,
+      `ring_back_${k}`,
+      RING_TEX_W,
+      RING_TEX_H,
+      (ctx) => drawRingHalf(ctx, p, theme, false),
+      px,
+    );
+    makeCanvas(
+      scene,
+      `ring_front_${k}`,
+      RING_TEX_W,
+      RING_TEX_H,
+      (ctx) => drawRingHalf(ctx, p, theme, true),
+      px,
+    );
     makeCanvas(scene, `ball_${k}`, BALL_TEX, BALL_TEX, (ctx) => drawBall(ctx, p, theme), px);
   }
   makeCanvas(scene, 'bubble', 18, 18, (ctx) => drawBubble(ctx, 18), px);
   makeCanvas(scene, 'sparkle', 32, 32, (ctx) => drawSparkle(ctx, 32), px);
-  makeCanvas(scene, 'btn_left_up', BUTTON_TEX, BUTTON_TEX, (ctx) => drawPlunger(ctx, theme.buttons.left, theme, false), px);
-  makeCanvas(scene, 'btn_left_down', BUTTON_TEX, BUTTON_TEX, (ctx) => drawPlunger(ctx, theme.buttons.left, theme, true), px);
-  makeCanvas(scene, 'btn_right_up', BUTTON_TEX, BUTTON_TEX, (ctx) => drawPlunger(ctx, theme.buttons.right, theme, false), px);
-  makeCanvas(scene, 'btn_right_down', BUTTON_TEX, BUTTON_TEX, (ctx) => drawPlunger(ctx, theme.buttons.right, theme, true), px);
-  makeCanvas(scene, 'tank_bg', TUNING.TANK_W, TUNING.TANK_H, (ctx) => drawBackground(ctx, theme, TUNING.TANK_W, TUNING.TANK_H), px);
-  makeCanvas(scene, 'tank_water', TUNING.TANK_W, TUNING.TANK_H, (ctx) => drawWater(ctx, theme, TUNING.TANK_W, TUNING.TANK_H), px);
+  makeCanvas(
+    scene,
+    'btn_left_up',
+    BUTTON_TEX,
+    BUTTON_TEX,
+    (ctx) => drawPlunger(ctx, theme.buttons.left, theme, false),
+    px,
+  );
+  makeCanvas(
+    scene,
+    'btn_left_down',
+    BUTTON_TEX,
+    BUTTON_TEX,
+    (ctx) => drawPlunger(ctx, theme.buttons.left, theme, true),
+    px,
+  );
+  makeCanvas(
+    scene,
+    'btn_right_up',
+    BUTTON_TEX,
+    BUTTON_TEX,
+    (ctx) => drawPlunger(ctx, theme.buttons.right, theme, false),
+    px,
+  );
+  makeCanvas(
+    scene,
+    'btn_right_down',
+    BUTTON_TEX,
+    BUTTON_TEX,
+    (ctx) => drawPlunger(ctx, theme.buttons.right, theme, true),
+    px,
+  );
+  makeCanvas(
+    scene,
+    'tank_bg',
+    TUNING.TANK_W,
+    TUNING.TANK_H,
+    (ctx) => drawBackground(ctx, theme, TUNING.TANK_W, TUNING.TANK_H),
+    px,
+  );
+  makeCanvas(
+    scene,
+    'tank_water',
+    TUNING.TANK_W,
+    TUNING.TANK_H,
+    (ctx) => drawWater(ctx, theme, TUNING.TANK_W, TUNING.TANK_H),
+    px,
+  );
   for (const land of [false, true]) {
     const b = frameBounds(land);
-    makeCanvas(scene, land ? 'frame_land' : 'frame_port', b.w, b.h, (ctx) => drawFrame(ctx, theme, b, land), px);
+    makeCanvas(
+      scene,
+      land ? 'frame_land' : 'frame_port',
+      b.w,
+      b.h,
+      (ctx) => drawFrame(ctx, theme, b, land),
+      px,
+    );
   }
 }
 

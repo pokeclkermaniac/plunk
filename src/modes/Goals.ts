@@ -58,7 +58,10 @@ export function evaluateGoal(goal: GoalDef, s: RoundStats): GoalStatus {
     case 'fullPegs':
       return st(s.fullPegs, goal.value);
     case 'fullPegColor':
-      return st(s.fullPegColors.filter((c) => goal.color === undefined || c === goal.color).length, goal.value);
+      return st(
+        s.fullPegColors.filter((c) => goal.color === undefined || c === goal.color).length,
+        goal.value,
+      );
     case 'noWrong':
       return st(s.score, goal.value, s.wrong > 0);
     case 'baskets':
@@ -66,7 +69,10 @@ export function evaluateGoal(goal: GoalDef, s: RoundStats): GoalStatus {
     case 'swishes':
       return st(s.swishes, goal.value);
     case 'fullTube':
-      return st(s.fullTubeColors.filter((c) => goal.color === undefined || c === goal.color).length, goal.value);
+      return st(
+        s.fullTubeColors.filter((c) => goal.color === undefined || c === goal.color).length,
+        goal.value,
+      );
     case 'everyHoop':
       return st(new Set(s.hoopsScored).size, s.hoopCount);
   }

@@ -34,7 +34,11 @@ export class Ring implements FreePiece {
     };
     const l = M.Bodies.circle(x - half, y, TUNING.RING_RIM_RADIUS, opts);
     const r = M.Bodies.circle(x + half, y, TUNING.RING_RIM_RADIUS, opts);
-    this.body = M.Body.create({ parts: [l, r], label: 'ring', frictionAir: TUNING.WATER_FRICTION_AIR }) as Body;
+    this.body = M.Body.create({
+      parts: [l, r],
+      label: 'ring',
+      frictionAir: TUNING.WATER_FRICTION_AIR,
+    }) as Body;
     (this.body as any).plunk = this;
     l.friction = r.friction = TUNING.RING_FRICTION;
     if (angle) M.Body.setAngle(this.body, angle);

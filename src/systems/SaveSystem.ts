@@ -135,7 +135,10 @@ function fillDefaults<T>(value: any, def: T): T {
     if (Array.isArray(d)) out[key] = Array.isArray(v) ? v : d;
     else if (isObj(d)) {
       // Records with dynamic keys (levels, boosters): keep stored keys too.
-      out[key] = Object.keys(d).length === 0 || key === 'boosters' ? { ...d, ...(isObj(v) ? v : {}) } : fillDefaults(v, d);
+      out[key] =
+        Object.keys(d).length === 0 || key === 'boosters'
+          ? { ...d, ...(isObj(v) ? v : {}) }
+          : fillDefaults(v, d);
     } else out[key] = v === undefined || typeof v !== typeof d ? d : v;
   }
   return out as T;

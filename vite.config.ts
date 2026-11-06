@@ -15,7 +15,8 @@ export default defineConfig({
       manifest: {
         name: 'Plunk! Water Toy Games',
         short_name: 'Plunk!',
-        description: 'The water toy you remember: ring toss and basketball, with a color-matching score twist.',
+        description:
+          'The water toy you remember: ring toss and basketball, with a color-matching score twist.',
         theme_color: '#1b8fd1',
         background_color: '#0e2a47',
         display: 'standalone',

@@ -9,7 +9,12 @@ import { hex, ThemeManager } from '../systems/ThemeManager';
 import { button, font, panel, text } from '../ui/ui';
 import type { GameScene } from './GameScene';
 
-const BOOSTER_ICONS: Record<BoosterId, string> = { slowmo: '🐢', magnet: '🧲', colorswap: '🎨', extratime: '⏱' };
+const BOOSTER_ICONS: Record<BoosterId, string> = {
+  slowmo: '🐢',
+  magnet: '🧲',
+  colorswap: '🎨',
+  extratime: '⏱',
+};
 
 /** Overlaid UI: score, timer / pieces left, goal, boosters, pause menu, banners and hints. */
 export class HudScene extends Phaser.Scene {
@@ -23,11 +28,17 @@ export class HudScene extends Phaser.Scene {
   private goalText?: Phaser.GameObjects.Text;
   private banner!: Phaser.GameObjects.Text;
   private pauseBtn!: Phaser.GameObjects.Container;
-  private boosterBtns: { id: BoosterId; c: Phaser.GameObjects.Container; count: Phaser.GameObjects.Text; bg: Phaser.GameObjects.Graphics }[] = [];
+  private boosterBtns: {
+    id: BoosterId;
+    c: Phaser.GameObjects.Container;
+    count: Phaser.GameObjects.Text;
+    bg: Phaser.GameObjects.Graphics;
+  }[] = [];
   private pauseLayer?: Phaser.GameObjects.Container;
   private hint?: Phaser.GameObjects.Container;
   private lastScore = 0;
   private hot?: Phaser.GameObjects.Text;
+  private textColor = '#ffffff';
 
   constructor() {
     super('Hud');
@@ -45,7 +56,16 @@ export class HudScene extends Phaser.Scene {
 
   create(): void {
     const t = ThemeManager.current;
-    const big = { fontFamily: font(), fontSize: '50px', fontStyle: 'bold', color: '#ffffff', stroke: '#00000088', strokeThickness: 6 };
+    const darkText = hex(t.ui.text) < 0x808080;
+    const big = {
+      fontFamily: font(),
+      fontSize: '50px',
+      fontStyle: 'bold',
+      color: t.ui.text,
+      stroke: darkText ? '#ffffffcc' : '#00000088',
+      strokeThickness: 6,
+    };
+    this.textColor = t.ui.text;
     const small = { fontFamily: font(), fontSize: '20px', fontStyle: 'bold', color: t.frame.trim };
     const versus = this.gs.cfg.versus;
     this.scoreLabel = this.add.text(0, 0, versus ? 'P1' : 'SCORE', small).setOrigin(0.5);
@@ -58,7 +78,14 @@ export class HudScene extends Phaser.Scene {
     this.timerText = this.add.text(0, 0, '', big).setOrigin(0.5);
     if (this.gs.cfg.goal) {
       this.goalText = this.add
-        .text(0, 0, '', { fontFamily: font(), fontSize: '22px', color: '#ffffff', stroke: '#00000099', strokeThickness: 4, align: 'center' })
+        .text(0, 0, '', {
+          fontFamily: font(),
+          fontSize: '22px',
+          color: '#ffffff',
+          stroke: '#00000099',
+          strokeThickness: 4,
+          align: 'center',
+        })
         .setOrigin(0.5);
     }
     this.banner = this.add
@@ -74,14 +101,24 @@ export class HudScene extends Phaser.Scene {
       })
       .setOrigin(0.5)
       .setVisible(false);
-    this.pauseBtn = button(this, 0, 0, 72, 64, 'II', () => this.togglePause(), { color: '#9aa7b4', size: 28 });
+    this.pauseBtn = button(this, 0, 0, 72, 64, 'II', () => this.togglePause(), {
+      color: '#9aa7b4',
+      size: 28,
+    });
 
     if (this.gs.cfg.boostersAllowed) {
       for (const b of BOOSTERS) {
         const bg = this.add.graphics();
         const icon = this.add.text(0, -2, BOOSTER_ICONS[b.id], { fontSize: '30px' }).setOrigin(0.5);
         const count = this.add
-          .text(22, 20, '0', { fontFamily: font(), fontSize: '18px', fontStyle: 'bold', color: '#ffffff', stroke: '#000', strokeThickness: 4 })
+          .text(22, 20, '0', {
+            fontFamily: font(),
+            fontSize: '18px',
+            fontStyle: 'bold',
+            color: '#ffffff',
+            stroke: '#000',
+            strokeThickness: 4,
+          })
           .setOrigin(0.5);
         const c = this.add.container(0, 0, [bg, icon, count]);
         c.setSize(66, 66).setInteractive({ useHandCursor: true });
@@ -165,7 +202,10 @@ export class HudScene extends Phaser.Scene {
       const pc = gs.worldToScreen(TUNING.TANK_W / 2, -96);
       this.pauseBtn.setPosition(versus ? W - 46 : pc.x, versus ? 40 : top.y + 4);
       this.boosterBtns.forEach((b, i) => {
-        const p = gs.worldToScreen(TUNING.TANK_W / 2 - 36 + (i % 2) * 72, TUNING.TANK_H + 132 + Math.floor(i / 2) * 76);
+        const p = gs.worldToScreen(
+          TUNING.TANK_W / 2 - 36 + (i % 2) * 72,
+          TUNING.TANK_H + 132 + Math.floor(i / 2) * 76,
+        );
         b.c.setPosition(p.x, p.y);
       });
     }
@@ -179,7 +219,10 @@ export class HudScene extends Phaser.Scene {
 
   refreshBoosters(): void {
     const sig = this.boosterBtns
-      .map((b) => `${Save.data.boosters[b.id] ?? 0}${this.gs.boosterAvailable(b.id)}${this.gs.selectMode === b.id}`)
+      .map(
+        (b) =>
+          `${Save.data.boosters[b.id] ?? 0}${this.gs.boosterAvailable(b.id)}${this.gs.selectMode === b.id}`,
+      )
       .join('|');
     if (sig === this.boosterSig) return;
     this.boosterSig = sig;
@@ -212,15 +255,16 @@ export class HudScene extends Phaser.Scene {
       const s = Math.ceil(gs.timeLeftMs / 1000);
       this.timerLabel.setText(gs.suddenDeath ? 'SUDDEN DEATH' : 'TIME');
       this.timerText.setText(`${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`);
-      this.timerText.setColor(s <= TUNING.TIMER_WARNING_SECONDS ? '#ff5252' : '#ffffff');
+      this.timerText.setColor(s <= TUNING.TIMER_WARNING_SECONDS ? '#ff5252' : this.textColor);
     } else {
       this.timerLabel.setText(gs.cfg.gameType === 'ringToss' ? 'RINGS' : 'BALLS');
       this.timerText.setText(`${gs.piecesLeft()}`);
-      this.timerText.setColor(gs.piecesLeft() <= 3 ? '#ff8a65' : '#ffffff');
+      this.timerText.setColor(gs.piecesLeft() <= 3 ? '#ff8a65' : this.textColor);
     }
     if (this.goalText && gs.cfg.goal) {
       const st = evaluateGoal(gs.cfg.goal, gs.stats);
-      const counter = gs.cfg.goal.type === 'score' || gs.cfg.goal.type === 'noWrong' ? '' : `  ${st.progress}/${st.target}`;
+      const counter =
+        gs.cfg.goal.type === 'score' || gs.cfg.goal.type === 'noWrong' ? '' : `  ${st.progress}/${st.target}`;
       this.goalText.setText(`🎯 ${goalText(gs.cfg.goal)}${counter}`);
     }
     if (gs.message) {
@@ -229,9 +273,22 @@ export class HudScene extends Phaser.Scene {
     if (gs.hotHands && !this.hot) {
       const p = this.timerText;
       this.hot = this.add
-        .text(p.x, p.y + 44, '🔥 HOT HANDS 🔥', { fontFamily: font(), fontSize: '22px', fontStyle: 'bold', color: '#ffb74d', stroke: '#000', strokeThickness: 4 })
+        .text(p.x, p.y + 44, '🔥 HOT HANDS 🔥', {
+          fontFamily: font(),
+          fontSize: '22px',
+          fontStyle: 'bold',
+          color: '#ffb74d',
+          stroke: '#000',
+          strokeThickness: 4,
+        })
         .setOrigin(0.5);
-      this.tweens.add({ targets: this.hot, scale: { from: 0.9, to: 1.1 }, duration: 300, yoyo: true, repeat: -1 });
+      this.tweens.add({
+        targets: this.hot,
+        scale: { from: 0.9, to: 1.1 },
+        duration: 300,
+        yoyo: true,
+        repeat: -1,
+      });
     }
     if (this.boosterBtns.length) this.refreshBoosters();
   }
@@ -249,17 +306,37 @@ export class HudScene extends Phaser.Scene {
     const H = this.scale.height;
     const shade = this.add.rectangle(0, 0, W, H, 0x000000, 0.6).setOrigin(0).setInteractive();
     const p = panel(this, W / 2, H / 2, 460, 470, 0.55);
-    const title = text(this, W / 2, H / 2 - 170, 'Paused', 52, ThemeManager.current.frame.trim, { fontStyle: 'bold' });
+    const title = text(this, W / 2, H / 2 - 170, 'Paused', 52, ThemeManager.current.frame.trim, {
+      fontStyle: 'bold',
+    });
     const resume = button(this, W / 2, H / 2 - 70, 340, 84, 'Resume', () => this.togglePause());
-    const restart = button(this, W / 2, H / 2 + 30, 340, 84, 'Restart', () => {
-      this.gs.setPaused(false);
-      this.scene.stop();
-      this.gs.scene.restart({ config: this.gs.originalCfg });
-    }, { color: ThemeManager.current.buttons.right });
-    const quit = button(this, W / 2, H / 2 + 130, 340, 84, 'Quit to menu', () => {
-      this.gs.setPaused(false);
-      this.gs.endRound('quit');
-    }, { color: '#9aa7b4' });
+    const restart = button(
+      this,
+      W / 2,
+      H / 2 + 30,
+      340,
+      84,
+      'Restart',
+      () => {
+        this.gs.setPaused(false);
+        this.scene.stop();
+        this.gs.scene.restart({ config: this.gs.originalCfg });
+      },
+      { color: ThemeManager.current.buttons.right },
+    );
+    const quit = button(
+      this,
+      W / 2,
+      H / 2 + 130,
+      340,
+      84,
+      'Quit to menu',
+      () => {
+        this.gs.setPaused(false);
+        this.gs.endRound('quit');
+      },
+      { color: '#9aa7b4' },
+    );
     this.pauseLayer = this.add.container(0, 0, [shade, p, title, resume, restart, quit]).setDepth(100);
   }
 
@@ -287,10 +364,26 @@ export class HudScene extends Phaser.Scene {
     if (!msg) return;
     const W = this.scale.width;
     const mid = gs.worldToScreen(TUNING.TANK_W / 2, TUNING.TANK_H * 0.55);
-    const t = text(this, 0, 0, msg, 28, '#ffffff', { fontStyle: 'bold', wordWrap: { width: Math.min(W - 60, 520) }, lineSpacing: 6 });
+    const t = text(this, 0, 0, msg, 28, '#ffffff', {
+      fontStyle: 'bold',
+      wordWrap: { width: Math.min(W - 60, 520) },
+      lineSpacing: 6,
+    });
     const bg = this.add.graphics();
-    bg.fillStyle(hex(ThemeManager.current.ui.panel), 0.92).fillRoundedRect(-t.width / 2 - 24, -t.height / 2 - 20, t.width + 48, t.height + 40, 20);
-    bg.lineStyle(3, hex(ThemeManager.current.frame.trim), 1).strokeRoundedRect(-t.width / 2 - 24, -t.height / 2 - 20, t.width + 48, t.height + 40, 20);
+    bg.fillStyle(hex(ThemeManager.current.ui.panel), 0.92).fillRoundedRect(
+      -t.width / 2 - 24,
+      -t.height / 2 - 20,
+      t.width + 48,
+      t.height + 40,
+      20,
+    );
+    bg.lineStyle(3, hex(ThemeManager.current.frame.trim), 1).strokeRoundedRect(
+      -t.width / 2 - 24,
+      -t.height / 2 - 20,
+      t.width + 48,
+      t.height + 40,
+      20,
+    );
     const arrows: Phaser.GameObjects.Text[] = [];
     for (const bp of gs.buttonPositions()) {
       const s = gs.worldToScreen(bp.x, bp.y - 150);

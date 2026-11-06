@@ -14,11 +14,15 @@ export class SettingsScene extends Phaser.Scene {
     super('Settings');
   }
 
-  init(): void {
+  private retheme = false;
+
+  init(data: { retheme?: boolean }): void {
     this.confirmReset = false;
+    this.retheme = !!data?.retheme;
   }
 
   create(): void {
+    if (this.retheme) applyTheme(this);
     backdrop(this);
     restartOnResize(this);
     const W = this.scale.width;
@@ -47,7 +51,11 @@ export class SettingsScene extends Phaser.Scene {
       });
       y += rowH;
     };
-    const toggleRow = (label: string, get: () => boolean, set: (v: boolean) => Promise<boolean> | boolean | void) => {
+    const toggleRow = (
+      label: string,
+      get: () => boolean,
+      set: (v: boolean) => Promise<boolean> | boolean | void,
+    ) => {
       row(label);
       toggle(this, ctrlX + (land ? 110 : 100), y, get(), set);
       y += rowH;
@@ -55,54 +63,94 @@ export class SettingsScene extends Phaser.Scene {
     sliderRow('Master volume', 'master');
     sliderRow('Music', 'music');
     sliderRow('Sound effects', 'sfx');
-    toggleRow('Mute all', () => s.mute, (v) => {
-      s.mute = v;
-      save();
-    });
-    toggleRow(Haptics.supported() ? 'Vibration' : 'Vibration (not on this device)', () => s.haptics, (v) => {
-      s.haptics = v;
-      save();
-      Haptics.tap();
-    });
-    toggleRow('Tilt to nudge water', () => s.tilt, async (v) => {
-      if (v) {
-        const ok = await Tilt.enable();
-        s.tilt = ok;
+    toggleRow(
+      'Mute all',
+      () => s.mute,
+      (v) => {
+        s.mute = v;
         save();
-        return ok;
-      }
-      Tilt.disable();
-      s.tilt = false;
-      save();
-      return false;
-    });
-    toggleRow('Reduce motion', () => s.reduceMotion, (v) => {
-      s.reduceMotion = v;
-      save();
-    });
+      },
+    );
+    toggleRow(
+      Haptics.supported() ? 'Vibration' : 'Vibration (not on this device)',
+      () => s.haptics,
+      (v) => {
+        s.haptics = v;
+        save();
+        Haptics.tap();
+      },
+    );
+    toggleRow(
+      'Tilt to nudge water',
+      () => s.tilt,
+      async (v) => {
+        if (v) {
+          const ok = await Tilt.enable();
+          s.tilt = ok;
+          save();
+          return ok;
+        }
+        Tilt.disable();
+        s.tilt = false;
+        save();
+        return false;
+      },
+    );
+    toggleRow(
+      'Reduce motion',
+      () => s.reduceMotion,
+      (v) => {
+        s.reduceMotion = v;
+        save();
+      },
+    );
     row('Timed round length');
     const lengths = [60, 90, 120];
     lengths.forEach((len, i) => {
-      button(this, ctrlX - 85 + i * 85 + (land ? 30 : 30), y, 78, 52, `${len}`, () => {
-        s.roundSeconds = len;
-        save();
-        this.scene.restart();
-      }, { color: s.roundSeconds === len ? ThemeManager.current.frame.trim : '#7d8590', size: 22 });
+      button(
+        this,
+        ctrlX - 85 + i * 85 + (land ? 30 : 30),
+        y,
+        78,
+        52,
+        `${len}`,
+        () => {
+          s.roundSeconds = len;
+          save();
+          this.scene.restart();
+        },
+        { color: s.roundSeconds === len ? ThemeManager.current.frame.trim : '#7d8590', size: 22 },
+      );
     });
     y += rowH + 10;
-    const resetBtn = button(this, cx, y, 380, 66, 'Reset progress', () => {
-      if (!this.confirmReset) {
-        this.confirmReset = true;
-        resetBtn.setLabel?.('Tap again to confirm');
-        return;
-      }
-      Save.reset();
-      applySettings();
-      applyTheme(this);
-      this.scene.restart();
-    }, { color: '#e57373', size: 24 });
+    const resetBtn = button(
+      this,
+      cx,
+      y,
+      380,
+      66,
+      'Reset progress',
+      () => {
+        if (!this.confirmReset) {
+          this.confirmReset = true;
+          resetBtn.setLabel?.('Tap again to confirm');
+          return;
+        }
+        Save.reset();
+        applySettings();
+        this.scene.restart({ retheme: true });
+      },
+      { color: '#e57373', size: 24 },
+    );
     y += land ? 56 : 90;
-    if (!land) text(this, cx, Math.min(y, H - 130), 'Plunk! v1.0 · No ads, no tracking, fully offline.\nAll art and sound are generated in code.', 18).setAlpha(0.7);
+    if (!land)
+      text(
+        this,
+        cx,
+        Math.min(y, H - 130),
+        'Plunk! v1.0 · No ads, no tracking, fully offline.\nAll art and sound are generated in code.',
+        18,
+      ).setAlpha(0.7);
     button(this, land ? 110 : cx, land ? H - 46 : H - 70, 220, 64, '‹ Back', () => this.scene.start('Menu'), {
       color: '#9aa7b4',
       size: 26,

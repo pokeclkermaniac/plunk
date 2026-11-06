@@ -40,7 +40,10 @@ export class Ball implements FreePiece {
     (this.body as any).plunk = this;
     (scene as any).matter.world.add(this.body);
     this.prevY = y;
-    this.image = scene.add.image(x, y, `ball_${pieceKey(piece)}`).setScale(texScale()).setDepth(DEPTH.free);
+    this.image = scene.add
+      .image(x, y, `ball_${pieceKey(piece)}`)
+      .setScale(texScale())
+      .setDepth(DEPTH.free);
   }
 
   get heavy(): boolean {

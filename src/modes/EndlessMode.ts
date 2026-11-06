@@ -37,9 +37,21 @@ export interface EndlessStep {
 
 export const ENDLESS_RAMP: EndlessStep[] = [
   { score: 600, colors: 4, label: 'A 4th color appears!' },
-  { score: 1400, obstacle: { type: 'ledge', x: 196, y: 470, w: 120, h: 16, angle: -12 }, label: 'A ledge drops in!' },
+  {
+    score: 1400,
+    obstacle: { type: 'ledge', x: 196, y: 470, w: 120, h: 16, angle: -12 },
+    label: 'A ledge drops in!',
+  },
   { score: 2400, colors: 5, specialChance: 0.1, label: 'A 5th color appears!' },
-  { score: 3600, obstacle: { type: 'paddle', x: 300, y: 430, w: 150, h: 14, speed: 25 }, label: 'A paddle starts turning!' },
+  {
+    score: 3600,
+    obstacle: { type: 'paddle', x: 300, y: 430, w: 150, h: 14, speed: 25 },
+    label: 'A paddle starts turning!',
+  },
   { score: 5000, colors: 6, specialChance: 0.12, label: 'All 6 colors!' },
-  { score: 7000, obstacle: { type: 'ledge', x: 404, y: 560, w: 120, h: 16, angle: 12 }, label: 'Another ledge!' },
+  {
+    score: 7000,
+    obstacle: { type: 'ledge', x: 404, y: 560, w: 120, h: 16, angle: 12 },
+    label: 'Another ledge!',
+  },
 ];

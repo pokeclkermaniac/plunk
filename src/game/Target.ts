@@ -53,7 +53,12 @@ export abstract class Target {
     g.fillStyle(0xffb300, 1).fillCircle(0, 0, 20);
     g.lineStyle(3, 0xffffff, 1).strokeCircle(0, 0, 20);
     const t = this.scene.add
-      .text(0, 0, `x${m}`, { fontFamily: this.theme.ui.font, fontSize: '20px', fontStyle: 'bold', color: '#4a2a00' })
+      .text(0, 0, `x${m}`, {
+        fontFamily: this.theme.ui.font,
+        fontSize: '20px',
+        fontStyle: 'bold',
+        color: '#4a2a00',
+      })
       .setOrigin(0.5);
     this.multBadge = this.scene.add.container(x, y, [g, t]).setDepth(DEPTH.badge);
     this.scene.tweens.add({ targets: g, alpha: 0.6, duration: 700, yoyo: true, repeat: -1 });

@@ -74,7 +74,12 @@ export class Hoop extends Target {
     return this.rimY + 70;
   }
   tubeSlotY(i: number): number {
-    return this.tubeTop + 8 + (this.state.capacity - 1 - i) * (TUNING.BALL_RADIUS * 2 * 0.62) + TUNING.BALL_RADIUS * 0.62;
+    return (
+      this.tubeTop +
+      8 +
+      (this.state.capacity - 1 - i) * (TUNING.BALL_RADIUS * 2 * 0.62) +
+      TUNING.BALL_RADIUS * 0.62
+    );
   }
 
   anchor() {
@@ -133,7 +138,12 @@ export class Hoop extends Target {
     g.fillStyle(hex(t.board), 1).fillRoundedRect(bxL + 2, bTop + 2, 8, bh - 4, 3);
     g.lineStyle(2, hex(t.rim), 1).strokeRect(bxL + 3, this.rimY - 46, 6, 34);
     // bracket
-    g.fillStyle(hex(t.boardEdge), 1).fillRect(Math.min(this.bx, this.backX), this.rimY + 2, Math.abs(this.backX - this.bx), 5);
+    g.fillStyle(hex(t.boardEdge), 1).fillRect(
+      Math.min(this.bx, this.backX),
+      this.rimY + 2,
+      Math.abs(this.backX - this.bx),
+      5,
+    );
     g.lineStyle(5, hex(t.rim), 1);
     this.ellipseArc(g, Math.PI, Math.PI * 2);
     // front lip (drawn over balls passing through)
@@ -141,7 +151,9 @@ export class Hoop extends Target {
     f.clear();
     f.lineStyle(6, hex(t.rim), 1);
     this.ellipseArc(f, 0, Math.PI);
-    f.fillStyle(hex(t.rim), 1).fillCircle(this.frontX, this.rimY, R + 1).fillCircle(this.backX, this.rimY, R);
+    f.fillStyle(hex(t.rim), 1)
+      .fillCircle(this.frontX, this.rimY, R + 1)
+      .fillCircle(this.backX, this.rimY, R);
     f.lineStyle(1.5, 0xffffff, 0.45);
     this.ellipseArc(f, 0.4, Math.PI - 0.4, 6);
     this.drawNet(0);
@@ -195,7 +207,9 @@ export class Hoop extends Target {
 
   /** Is x inside the rim opening? margin < 0 makes it stricter. */
   inColumn(x: number, margin = 0): boolean {
-    return x > this.colMin + TUNING.RIM_POINT_RADIUS - margin && x < this.colMax - TUNING.RIM_POINT_RADIUS + margin;
+    return (
+      x > this.colMin + TUNING.RIM_POINT_RADIUS - margin && x < this.colMax - TUNING.RIM_POINT_RADIUS + margin
+    );
   }
 
   /**
@@ -236,7 +250,10 @@ export class Hoop extends Target {
   }
 
   addTubeBall(i: number, ball: Ball): void {
-    ball.image.setDepth(DEPTH.tubePiece).setPosition(this.rimCenterX, this.tubeSlotY(i)).setScale(texScale() * 0.62);
+    ball.image
+      .setDepth(DEPTH.tubePiece)
+      .setPosition(this.rimCenterX, this.tubeSlotY(i))
+      .setScale(texScale() * 0.62);
     this.tubeBalls[i] = ball.image;
   }
 

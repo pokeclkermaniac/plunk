@@ -23,7 +23,10 @@ export interface LevelData {
   jets?: [number, number];
 }
 
-const modules = import.meta.glob('../data/levels/*.json', { eager: true }) as Record<string, { default: LevelData }>;
+const modules = import.meta.glob('../data/levels/*.json', { eager: true }) as Record<
+  string,
+  { default: LevelData }
+>;
 
 function sortById(a: LevelData, b: LevelData) {
   return a.id.localeCompare(b.id);

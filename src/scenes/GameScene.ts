@@ -9,7 +9,14 @@ import { Obstacle } from '../game/Obstacles';
 import { Peg } from '../game/Peg';
 import type { FreePiece } from '../game/Piece';
 import { Ring } from '../game/Ring';
-import { applyDelta, clearTarget, isFull, onPieceLanded, type LandContext, type LandResult } from '../game/Scoring';
+import {
+  applyDelta,
+  clearTarget,
+  isFull,
+  onPieceLanded,
+  type LandContext,
+  type LandResult,
+} from '../game/Scoring';
 import { pickPiece, seededRng, type Rng } from '../game/Spawner';
 import type { Target } from '../game/Target';
 import { frameBounds, texScale } from '../game/Textures';
@@ -153,7 +160,14 @@ export class GameScene extends Phaser.Scene {
     this.add.image(0, 0, 'tank_bg').setOrigin(0).setScale(texScale()).setDepth(DEPTH.bg);
     this.add.image(0, 0, 'tank_water').setOrigin(0).setScale(texScale()).setDepth(DEPTH.water);
     this.waterFront = this.add
-      .rectangle(0, TUNING.WATER_SURFACE_Y, TUNING.TANK_W, TUNING.TANK_H - TUNING.WATER_SURFACE_Y, hex(this.theme.water.top), this.theme.water.front)
+      .rectangle(
+        0,
+        TUNING.WATER_SURFACE_Y,
+        TUNING.TANK_W,
+        TUNING.TANK_H - TUNING.WATER_SURFACE_Y,
+        hex(this.theme.water.top),
+        this.theme.water.front,
+      )
       .setOrigin(0)
       .setDepth(DEPTH.waterFront);
     this.surface = this.add.graphics().setDepth(DEPTH.waterFront);
@@ -189,7 +203,12 @@ export class GameScene extends Phaser.Scene {
       accelerationY: -60,
       deathZone: {
         type: 'onLeave',
-        source: new Phaser.Geom.Rectangle(-10, TUNING.WATER_SURFACE_Y + 4, TUNING.TANK_W + 20, TUNING.TANK_H + 40),
+        source: new Phaser.Geom.Rectangle(
+          -10,
+          TUNING.WATER_SURFACE_Y + 4,
+          TUNING.TANK_W + 20,
+          TUNING.TANK_H + 40,
+        ),
       } as any,
       emitCallback: (p: any) => {
         p.wob = Math.random() * Math.PI * 2;
@@ -215,7 +234,10 @@ export class GameScene extends Phaser.Scene {
     this.frame = this.add.image(0, 0, 'frame_port').setOrigin(0).setDepth(DEPTH.frame);
     for (let i = 0; i < 2; i++) {
       const side = i === 0 ? 'left' : 'right';
-      const b = this.add.image(0, 0, `btn_${side}_up`).setScale(texScale() * 0.92).setDepth(DEPTH.buttons);
+      const b = this.add
+        .image(0, 0, `btn_${side}_up`)
+        .setScale(texScale() * 0.92)
+        .setDepth(DEPTH.buttons);
       const fw = b.width; // texture-space size (BUTTON_TEX × texture resolution)
       b.setInteractive(new Phaser.Geom.Circle(fw / 2, fw / 2, (fw / 2) * 1.08), Phaser.Geom.Circle.Contains);
       b.on('pointerdown', () => this.pressJet(i));
@@ -356,7 +378,10 @@ export class GameScene extends Phaser.Scene {
 
   // ── spawning ───────────────────────────────────────────────────
   private nextPiece(): Piece {
-    return pickPiece({ colors: this.colors, specialChance: this.specialChance, specialWeights: this.cfg.specialWeights }, this.rng);
+    return pickPiece(
+      { colors: this.colors, specialChance: this.specialChance, specialWeights: this.cfg.specialWeights },
+      this.rng,
+    );
   }
 
   private addPiece(piece: Piece, x: number, y: number): FreePiece {
@@ -381,7 +406,8 @@ export class GameScene extends Phaser.Scene {
         if (avoid.every((a) => Math.abs(a - x) > 55)) break;
       }
       const y = floorYAt(this.floor, x) - 40 - Math.floor(i / 2) * 55;
-      const piece: Piece = i < specials.length ? { color: i % this.colors, kind: specials[i] } : this.nextPiece();
+      const piece: Piece =
+        i < specials.length ? { color: i % this.colors, kind: specials[i] } : this.nextPiece();
       // Guarantee every colour appears at the start.
       if (i < this.colors && piece.kind === 'normal') piece.color = i;
       this.addPiece(piece, x, y);
@@ -390,7 +416,8 @@ export class GameScene extends Phaser.Scene {
 
   /** Drop a new piece in from the top, away from the targets so it isn't a free score. */
   private dropPiece(piece: Piece = this.nextPiece()): void {
-    const avoid = this.cfg.gameType === 'ringToss' ? this.pegs.map((p) => p.x) : this.hoops.map((h) => h.rimCenterX);
+    const avoid =
+      this.cfg.gameType === 'ringToss' ? this.pegs.map((p) => p.x) : this.hoops.map((h) => h.rimCenterX);
     let x = 300;
     for (let tries = 0; tries < 12; tries++) {
       x = 70 + this.rng() * (TUNING.TANK_W - 140);
@@ -554,7 +581,8 @@ export class GameScene extends Phaser.Scene {
     if (steps === TUNING.MAX_STEPS_PER_FRAME) this.acc = 0;
 
     for (const p of this.pieces) p.sync();
-    for (const t of this.targets) t.updateBadge(t instanceof Hoop ? this.theme.balls.colors : this.theme.rings.colors);
+    for (const t of this.targets)
+      t.updateBadge(t instanceof Hoop ? this.theme.balls.colors : this.theme.rings.colors);
     this.drawSurface();
 
     // timer (real time; slow-mo doesn't slow the clock)
@@ -571,7 +599,13 @@ export class GameScene extends Phaser.Scene {
         AudioManager.play('hothands');
         this.flash('🔥 HOT HANDS! Double points! 🔥', 2200);
         this.shake(TUNING.SHAKE_SMALL, 200);
-        this.tweens.add({ targets: this.waterFront, alpha: { from: 0.25, to: this.theme.water.front }, duration: 500, yoyo: true, repeat: -1 });
+        this.tweens.add({
+          targets: this.waterFront,
+          alpha: { from: 0.25, to: this.theme.water.front },
+          duration: 500,
+          yoyo: true,
+          repeat: -1,
+        });
         this.waterFront.setFillStyle(0xff7a1a, 0.18);
       }
       if (this.timeLeftMs <= 0) {
@@ -591,7 +625,7 @@ export class GameScene extends Phaser.Scene {
     applyWater(this.pieces, g.y, g.scale, tilt);
     for (const j of this.jets) j.apply(this.pieces, now, timeScale, this.rng);
     for (const p of this.pieces) {
-      if (p instanceof Ball && p.lastJetHit === now) {
+      if (isBall(p) && p.lastJetHit === now) {
         p.touchedRim = false;
         p.touchedBoard = false;
       }
@@ -603,20 +637,20 @@ export class GameScene extends Phaser.Scene {
     for (const o of this.obstacles) o.update(dtMs * timeScale);
     for (const t of this.targets) t.update(now, dtMs * timeScale);
 
-    for (const p of this.pieces) if (p instanceof Ball) p.prevY = p.body.position.y;
+    for (const p of this.pieces) if (isBall(p)) p.prevY = p.body.position.y;
     this.matter.world.step(dtMs);
 
     // captures & baskets
     for (const p of [...this.pieces]) {
       if (!p.alive) continue;
-      if (p instanceof Ring) {
+      if (isRing(p)) {
         for (const peg of this.pegs) {
           if (peg.canCapture(p)) {
             this.captureRing(p, peg);
             break;
           }
         }
-      } else if (p instanceof Ball) {
+      } else if (isBall(p)) {
         for (const h of this.hoops) {
           if (h.checkBasket(p, now)) {
             this.scoreBasket(p, h);
@@ -644,14 +678,21 @@ export class GameScene extends Phaser.Scene {
         x: p.body.velocity.x * 0.92 + (dx / d) * k,
         y: p.body.velocity.y * 0.92 + (dy / d) * k * 0.6,
       });
-      if (p instanceof Ring) M.Body.setAngle(p.body, p.body.angle * 0.9);
+      if (isRing(p)) M.Body.setAngle(p.body, p.body.angle * 0.9);
     }
   }
 
   /** Pieces that tunnel out of the tank are put back on the floor. */
   private rescue(p: FreePiece): void {
     const { x, y } = p.body.position;
-    if (x < -20 || x > TUNING.TANK_W + 20 || y < -40 || y > TUNING.TANK_H + 30 || !isFinite(x) || !isFinite(y)) {
+    if (
+      x < -20 ||
+      x > TUNING.TANK_W + 20 ||
+      y < -40 ||
+      y > TUNING.TANK_H + 30 ||
+      !isFinite(x) ||
+      !isFinite(y)
+    ) {
       M.Body.setPosition(p.body, { x: this.jets[Math.floor(this.rng() * 2)].x, y: TUNING.TANK_H - 80 });
       M.Body.setVelocity(p.body, { x: 0, y: 0 });
     }
@@ -684,7 +725,7 @@ export class GameScene extends Phaser.Scene {
         if (!piece) return;
         const v = piece.body.velocity;
         const speed = Math.hypot(v.x, v.y);
-        if (piece instanceof Ball) {
+        if (isBall(piece)) {
           if (other.label === 'rim') {
             piece.touchedRim = true;
             AudioManager.play('clang');
@@ -751,7 +792,13 @@ export class GameScene extends Phaser.Scene {
         ease: 'Bounce.easeOut',
         onComplete: () => {
           peg.addStackVisual(slot, ring);
-          if (this.theme.squash) this.tweens.add({ targets: [ring.back, ring.front], scaleY: texScale() * 0.75, duration: 70, yoyo: true });
+          if (this.theme.squash)
+            this.tweens.add({
+              targets: [ring.back, ring.front],
+              scaleY: texScale() * 0.75,
+              duration: 70,
+              yoyo: true,
+            });
         },
       });
       peg.rebuildStackBody();
@@ -781,7 +828,13 @@ export class GameScene extends Phaser.Scene {
 
     if (ball.piece.kind === 'bomb') {
       const pts = hoop.drainTube();
-      this.tweens.add({ targets: ball.image, scale: texScale() * 1.6, alpha: 0, duration: 200, onComplete: () => ball.destroy() });
+      this.tweens.add({
+        targets: ball.image,
+        scale: texScale() * 1.6,
+        alpha: 0,
+        duration: 200,
+        onComplete: () => ball.destroy(),
+      });
       AudioManager.play('bomb');
       this.shake(TUNING.SHAKE_BIG, 240);
       this.sparkles.explode(18, hoop.rimCenterX, hoop.rimY + 40);
@@ -850,7 +903,8 @@ export class GameScene extends Phaser.Scene {
       this.popup(a.x, a.y - 20, label, col, result.streak >= 4 ? 40 : 32);
       if (ctx.swish) this.popup(a.x, a.y - 60, 'SWISH!', '#7ff3ff', 30);
       else if (ctx.bank) this.popup(a.x, a.y - 60, 'BANK!', '#ffffff', 26);
-      if (ctx.globalMult && ctx.globalMult > 1 && result.points > 0) this.popup(a.x, a.y - 95, '🔥x2', '#ffb74d', 24);
+      if (ctx.globalMult && ctx.globalMult > 1 && result.points > 0)
+        this.popup(a.x, a.y - 95, '🔥x2', '#ffb74d', 24);
     } else {
       this.popup(a.x, a.y - 20, 'BOOM!', '#ffcc33', 38);
     }
@@ -875,7 +929,10 @@ export class GameScene extends Phaser.Scene {
     // glow while a streak builds
     if (target instanceof Peg) {
       const sc = target.state.streakColor;
-      target.setGlow(isFull(target.state) ? 0 : target.state.streak - 1, sc === null ? 0xffffff : hex(colors[sc]));
+      target.setGlow(
+        isFull(target.state) ? 0 : target.state.streak - 1,
+        sc === null ? 0xffffff : hex(colors[sc]),
+      );
     }
 
     if (types.includes('fullBonus')) {
@@ -900,7 +957,9 @@ export class GameScene extends Phaser.Scene {
       });
       if (this.cfg.endless && this.supply !== null) {
         this.supply += TUNING.ENDLESS_REFILL_ON_FULL_PEG;
-        this.time.delayedCall(700, () => this.popup(a.x, a.y - 110, `+${TUNING.ENDLESS_REFILL_ON_FULL_PEG} rings`, '#a5ff8a', 28));
+        this.time.delayedCall(700, () =>
+          this.popup(a.x, a.y - 110, `+${TUNING.ENDLESS_REFILL_ON_FULL_PEG} rings`, '#a5ff8a', 28),
+        );
       }
     } else if (types.includes('targetDead')) {
       this.time.delayedCall(250, () => this.popup(a.x, a.y - 60, 'clogged…', '#cfd8dc', 24));
@@ -1011,7 +1070,14 @@ export class GameScene extends Phaser.Scene {
     t.setX(cx);
     t.setScale(0.4);
     this.tweens.add({ targets: t, scale: 1, duration: 160, ease: 'Back.easeOut' });
-    this.tweens.add({ targets: t, y: y - 70, alpha: 0, delay: 500, duration: 700, onComplete: () => t.destroy() });
+    this.tweens.add({
+      targets: t,
+      y: y - 70,
+      alpha: 0,
+      delay: 500,
+      duration: 700,
+      onComplete: () => t.destroy(),
+    });
   }
 
   shake(intensity: number, ms: number): void {
@@ -1053,7 +1119,8 @@ export class GameScene extends Phaser.Scene {
         this.stats.score = this.score;
       }
     }
-    const winner: -1 | 0 | 1 = this.scores[0] === this.scores[1] ? -1 : this.scores[0] > this.scores[1] ? 0 : 1;
+    const winner: -1 | 0 | 1 =
+      this.scores[0] === this.scores[1] ? -1 : this.scores[0] > this.scores[1] ? 0 : 1;
     const summary: RoundSummary = {
       cfg: this.originalCfg,
       score: this.score,
@@ -1097,3 +1164,10 @@ export class GameScene extends Phaser.Scene {
 }
 
 type Pointer = Phaser.Input.Pointer;
+
+function isRing(p: FreePiece): p is Ring {
+  return p.type === 'ring';
+}
+function isBall(p: FreePiece): p is Ball {
+  return p.type === 'ball';
+}

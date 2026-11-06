@@ -44,7 +44,13 @@ export function button(
     g.fillStyle(0x000000, 0.28).fillRoundedRect(-w / 2 + 2, -h / 2 + 7, w, h, r);
     g.fillStyle(hex(shade(c, -0.35)), 1).fillRoundedRect(-w / 2, -h / 2 + (pressed ? 2 : 5), w, h, r);
     g.fillStyle(hex(c), 1).fillRoundedRect(-w / 2, -h / 2 + (pressed ? 2 : 0), w, h - 4, r);
-    g.fillStyle(0xffffff, pressed ? 0.12 : 0.28).fillRoundedRect(-w / 2 + 8, -h / 2 + (pressed ? 6 : 4), w - 16, h * 0.32, r * 0.6);
+    g.fillStyle(0xffffff, pressed ? 0.12 : 0.28).fillRoundedRect(
+      -w / 2 + 8,
+      -h / 2 + (pressed ? 6 : 4),
+      w - 16,
+      h * 0.32,
+      r * 0.6,
+    );
     if (t.frame.outlineWidth > 0) {
       g.lineStyle(Math.min(4, t.frame.outlineWidth), hex(t.frame.outline), 1);
       g.strokeRoundedRect(-w / 2, -h / 2 + (pressed ? 2 : 0), w, h - 4, r);
@@ -126,7 +132,13 @@ export function text(
     .setOrigin(0.5);
 }
 
-export function heading(scene: Phaser.Scene, x: number, y: number, s: string, size = 54): Phaser.GameObjects.Text {
+export function heading(
+  scene: Phaser.Scene,
+  x: number,
+  y: number,
+  s: string,
+  size = 54,
+): Phaser.GameObjects.Text {
   const t = ThemeManager.current;
   return text(scene, x, y, s, size, t.frame.trim, {
     fontStyle: 'bold',
@@ -150,7 +162,12 @@ export function backdrop(scene: Phaser.Scene): void {
       steps,
       i,
     );
-    g.fillStyle(Phaser.Display.Color.GetColor(c.r, c.g, c.b), 1).fillRect(0, (H / steps) * i, W, H / steps + 1);
+    g.fillStyle(Phaser.Display.Color.GetColor(c.r, c.g, c.b), 1).fillRect(
+      0,
+      (H / steps) * i,
+      W,
+      H / steps + 1,
+    );
   }
   g.fillStyle(0xffffff, 0.06);
   for (let i = 0; i < 9; i++) g.fillCircle((W / 8) * i, H * 0.12 + (i % 2) * 40, 60 + (i % 3) * 30);
@@ -248,7 +265,14 @@ export function restartOnResize(scene: Phaser.Scene, data?: object): void {
 }
 
 /** A rounded translucent panel. */
-export function panel(scene: Phaser.Scene, x: number, y: number, w: number, h: number, alpha = 0.35): Phaser.GameObjects.Graphics {
+export function panel(
+  scene: Phaser.Scene,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  alpha = 0.35,
+): Phaser.GameObjects.Graphics {
   const g = scene.add.graphics();
   g.fillStyle(0x000000, alpha).fillRoundedRect(x - w / 2, y - h / 2, w, h, 24);
   g.lineStyle(2, 0xffffff, 0.12).strokeRoundedRect(x - w / 2, y - h / 2, w, h, 24);

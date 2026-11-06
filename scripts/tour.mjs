@@ -4,7 +4,9 @@ const { chromium } = createRequire(import.meta.url)('playwright');
 const out = process.argv[2] || 'shots';
 const land = process.argv[3] === 'landscape';
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: land ? { width: 960, height: 540 } : { width: 405, height: 720 } });
+const page = await browser.newPage({
+  viewport: land ? { width: 960, height: 540 } : { width: 405, height: 720 },
+});
 const errors = [];
 page.on('pageerror', (e) => errors.push(String(e.stack).slice(0, 900)));
 page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
@@ -15,7 +17,8 @@ const go = async (name, js, wait = 900) => {
   await page.waitForTimeout(wait);
   await page.screenshot({ path: `${out}/${land ? 'L_' : 'P_'}${name}.png` });
 };
-const start = (key, data = '{}') => `(async()=>{const g=window.__game; g.scene.getScenes(true).forEach(s=>s.scene.key!=='${key}'&&s.scene.stop()); g.scene.start('${key}', ${data});})()`;
+const start = (key, data = '{}') =>
+  `(async()=>{const g=window.__game; g.scene.getScenes(true).forEach(s=>s.scene.key!=='${key}'&&s.scene.stop()); g.scene.start('${key}', ${data});})()`;
 await go('menu', start('Menu'));
 await go('type', start('Menu', "{screen:'type'}"));
 await go('modes_ring', start('Menu', "{screen:'modes',gameType:'ringToss'}"));
@@ -24,15 +27,23 @@ await go('levels', start('LevelSelect', "{gameType:'ringToss',selected:0}"));
 await go('collection', start('Collection'));
 await go('profile', start('Profile'));
 await go('settings', start('Settings'));
-const lv = (type, i) => `(async()=>{const m=await import('/src/modes/LevelMode.ts'); const g=window.__game; g.scene.getScenes(true).forEach(s=>s.scene.key!=='Game'&&s.scene.stop()); g.scene.start('Game',{config:m.levelConfig(m.LEVELS['${type}'][${i}], ${i})});})()`;
+const lv = (type, i) =>
+  `(async()=>{const m=await import('/src/modes/LevelMode.ts'); const g=window.__game; g.scene.getScenes(true).forEach(s=>s.scene.key!=='Game'&&s.scene.stop()); g.scene.start('Game',{config:m.levelConfig(m.LEVELS['${type}'][${i}], ${i})});})()`;
 for (const i of [6, 8, 11]) await go(`lv_ring_${i + 1}`, lv('ringToss', i), 1500);
 for (const i of [3, 5]) await go(`lv_ball_${i + 1}`, lv('basketball', i), 1500);
-const vs = (type) => `(async()=>{const m=await import('/src/modes/VersusMode.ts'); const g=window.__game; g.scene.getScenes(true).forEach(s=>s.scene.key!=='Game'&&s.scene.stop()); g.scene.start('Game',{config:m.versusConfig('${type}')});})()`;
+const vs = (type) =>
+  `(async()=>{const m=await import('/src/modes/VersusMode.ts'); const g=window.__game; g.scene.getScenes(true).forEach(s=>s.scene.key!=='Game'&&s.scene.stop()); g.scene.start('Game',{config:m.versusConfig('${type}')});})()`;
 await go('vs_ring', vs('ringToss'), 1500);
 await go('vs_ball', vs('basketball'), 1500);
 // end a round to see results
-await go('results', `(async()=>{ const gs = window.__plunk; gs.score = 1234; gs.stats.landed=12; gs.endRound('time'); })()`, 2600);
-await page.evaluate(`(async()=>{const m=await import('/src/modes/EndlessMode.ts'); const g=window.__game; g.scene.getScenes(true).forEach(s=>s.scene.key!=='Game'&&s.scene.stop()); g.scene.start('Game',{config:m.endlessConfig()});})()`);
+await go(
+  'results',
+  `(async()=>{ const gs = window.__plunk; gs.score = 1234; gs.stats.landed=12; gs.endRound('time'); })()`,
+  2600,
+);
+await page.evaluate(
+  `(async()=>{const m=await import('/src/modes/EndlessMode.ts'); const g=window.__game; g.scene.getScenes(true).forEach(s=>s.scene.key!=='Game'&&s.scene.stop()); g.scene.start('Game',{config:m.endlessConfig()});})()`,
+);
 await page.waitForTimeout(1200);
 await page.evaluate(`window.__plunk.events.emit('requestPause')`);
 await page.waitForTimeout(500);

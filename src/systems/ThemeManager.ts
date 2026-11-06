@@ -39,7 +39,10 @@ export interface Theme {
 export type PieceStyle = 'glossy' | 'flat' | 'cartoon' | 'clay' | 'neon' | 'beach';
 export type BackgroundStyle = 'plain' | 'bubbles' | 'dots' | 'grid' | 'clay' | 'fish' | 'stars' | 'tiles';
 
-const modules = import.meta.glob('../data/themes/*.json', { eager: true }) as Record<string, { default: Theme }>;
+const modules = import.meta.glob('../data/themes/*.json', { eager: true }) as Record<
+  string,
+  { default: Theme }
+>;
 
 export const THEMES: Record<string, Theme> = {};
 for (const m of Object.values(modules)) THEMES[m.default.id] = m.default;
